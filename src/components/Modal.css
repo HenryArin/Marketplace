@@ -141,7 +141,7 @@
 /* My Listings View */
 .my-listings-view {
   display: flex;
-  gap: 15px;
+  gap: 20px;
   height: 100%;
 }
 

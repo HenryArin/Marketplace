@@ -67,6 +67,8 @@ function App() {
       <div className="CreateAccount">
       
      
+      <img src="./Images/Icon.png" className="Account-Icon"></img>
+
       <h1 className="Account">Create an Account</h1>
       <input  id="Username" placeholder="Username"></input>
       <input  id="Password" placeholder="Password"></input>

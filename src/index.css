@@ -28,12 +28,179 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #273b31;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
+#Top-Name, h1{
+  color: white;
+  position: fixed;
+  top: 35px;
+  font-size: 35px;
+  right: 44%;
+}
+
+#Top-Search, input{
+    background-color: white;
+    color:#273b31;
+    border-radius: 12px;
+    position: fixed;
+    top: 50px;
+    right: 45px;
+    padding: 10px 20px 10px 20px;
+}
+
+
+.CreateAccount{
+  background-color: transparent;
+  position: fixed;
+  top: 150px;
+  right: 100px;
+  border: 2px solid white;
+  height: 400px;
+  width: 400px;
+}
+
+.Image{
+  position: fixed;
+  z-index: 1;
+  left: 150px;
+  top: 200px;
+  height: 65%;
+  width: 25%;
+}
+
+.Account, h1{
+  position: fixed;
+  z-index: 1;
+  top: 225px;
+  right: 200px;
+  color: white;
+  font-size: 25px;
+}
+
+#Username, Input{
+  background-color: white;
+  z-index: 1;
+  padding: 15px 20px 15px 20px;
+  color:#273b31;
+  position: fixed;
+  top: 300px;
+  right: 200px;
+}
+
+#Password, Input{
+  background-color: white;
+  z-index: 1;
+  padding: 15px 20px 15px 20px;
+  color:#273b31;
+  position: fixed;
+  top: 375px;
+  right: 200px;
+}
+
+.Account-Icon{
+  color: white;
+  height: 75px;
+  width: 75px;
+  position: fixed;
+  top: 165px;
+  right: 265px;
+}
+
+/* ==========================================================
+============================================================= */
+
+.slideshow-container {
+  position: fixed;
+  z-index: 1;
+  left: 150px;
+  top: 200px;
+  width: 25%; /* Matches the image width */
+  height: 65%; /* Matches the image height */
+  display: flex;
+  justify-content: center; /* Center the image horizontally within the container */
+  align-items: center; /* Center vertically within the container */
+}
+
+.pre-footer-image {
+  width: 100%; /* Fills the container width (25% of viewport) */
+  height: 100%; /* Fills the container height (65% of viewport) */
+  object-fit: cover; /* Ensures all images scale uniformly to fit the container */
+  display: block;
+  transition: opacity 0.5s ease-in-out; /* Smooth 0.5-second fade */
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+
+
+
+ /* ====================================================== */
+
+
+
+
+.Button-Account{
+  color: white;
+  z-index: 1;
+  position: fixed;
+  top: 450px;
+  padding: 15px 45px 15px 45px;
+  background-color:#456957;
+  right: 235px;
+}
+
+
+
+.Bottom-Nav{
+  background-color: white;
+  position: fixed;
+  top: 625px;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  padding: 0;
+  margin: 0;
+}
+
+.Front-Button{
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8em 5em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #fefefe;
+  color:#273b31;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  position: fixed;
+  top: 50px;
+  left: 15%;
+  transform: translateX(-50%);
+
+}
+
+.Front-Icon{
+  position: fixed;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  top: 20%;
+  left: 49%;
+}
+
 
 button {
   border-radius: 8px;
@@ -42,10 +209,11 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #669bbc;
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }

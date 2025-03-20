@@ -36,7 +36,7 @@ h1 {
   line-height: 1.1;
 }
 
-#Top-Name, h1{
+#Top-Name > p{
   color: white;
   position: fixed;
   top: 35px;
@@ -74,7 +74,7 @@ h1 {
   width: 25%;
 }
 
-.Account, h1{
+.Account > h2{
   position: fixed;
   z-index: 1;
   top: 225px;
@@ -113,6 +113,7 @@ h1 {
 }
 
 /* ==========================================================
+SlideShow Image CSS
 ============================================================= */
 
 .slideshow-container {
@@ -144,9 +145,144 @@ h1 {
 }
 
 
-
-
  /* ====================================================== */
+
+
+ /* ==========================================================
+Right Modal CSS
+============================================================= */
+
+#Top-Line {
+  width: 500px;
+  height: 1px;
+  position: fixed;
+  top: 20%;
+  left: 25px;
+  background-color: black;
+
+}
+
+#Hero > h1 {
+  color: black;
+  Font-size: 25px;
+  width: 400px;
+  font-weight: 100;
+  position: fixed;
+  left: 20px;
+  top: 185px;
+  text-align: left;
+}
+
+
+#Button-Container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px; /* Adds some padding to match the spacing in the image */
+ 
+}
+
+#Button-Rows {
+  display: flex;
+  
+  gap: 10px;
+  margin-bottom: 20px;
+  
+  position: fixed;
+  left: 165px;
+  z-index: 1;
+  top: 315px;
+}
+
+#Button-Rows .search-container {
+  position: relative;
+  flex: 1;
+}
+
+#Button-Rows .search-input {
+  width: 100px;
+  padding: 8px 30px 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  top: 315px;
+  left: 20px;
+}
+
+#Button-Rows .the-filter-button{
+  background-color: #fff; /* White background to match the image */
+  border: 1px solid #ccc; /* Gray border to match the image */
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #000; /* Black text to match the image */
+}
+
+
+#Button-Rows .filter-button {
+  background-color: #fff; /* White background to match the image */
+  border: 1px solid #ccc; /* Gray border to match the image */
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #000; /* Black text to match the image */
+}
+
+#Button-Rows .filter-button:hover {
+  background-color: #f5f5f5; /* Light gray hover effect */
+}
+
+
+#List-Container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  position: fixed;
+  top: 375px;
+  left: 45px;
+}
+
+#List-Grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-template-rows: repeat(2, auto); /* 2 rows */
+  gap: 40px; /* Spacing between images */
+  flex: 1;
+}
+
+#List-Grid .listing-item {
+  display: flex;
+  justify-content: center; /* Centers the image within the grid cell */
+}
+
+.List-Image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* Ensures the image scales properly within the 250x250 box */
+  border-radius: 8px; /* Matches the rounded corners in the image */
+}
+
+
+
+
+
+#Bottom-Line {
+  width: 1000px;
+  height: 1px;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  background-color: black;
+}
+
+
+
+/* ============================================================== */
 
 
 

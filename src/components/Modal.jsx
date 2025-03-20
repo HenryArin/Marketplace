@@ -19,6 +19,7 @@ const Modal = ({ isOpen, onClose, children, title }) => {
     localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
+  
   if (!isOpen) return null;
 
   const handleLogin = () => {
@@ -84,22 +85,14 @@ const Modal = ({ isOpen, onClose, children, title }) => {
           >
             {currentView === 'main' ? title : 'Back to Listings'}
           </h2>
-          <div className="search-container">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={handleSearch}
-            />
-          </div>
+          
         </div>
         
         {currentView === 'main' && (
           <div className="navigation-buttons">
-            <button onClick={() => setCurrentView('messages')}>Messages</button>
-            <button onClick={() => setCurrentView('myListings')}>My Listings</button>
-            <button onClick={() => setCurrentView('createListing')}>Create Listing</button>
+            <button onClick={() => setCurrentView('messages')}>My Listings</button>
+            <button onClick={() => setCurrentView('myListings')}>Create Listings</button>
+            <button onClick={() => setCurrentView('createListing')}>Messages</button>
           </div>
         )}
 

@@ -41,9 +41,15 @@
   color: #888;
 }
 
-
-
-
+.Account {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Ensures everything inside is left-aligned */
+  max-width: 400px; /* Keeps the form from stretching */
+  width: 100%;
+  padding: 15px;
+  margin-left: 0;
+}
 
 /* =========================================================
    Login Form CSS

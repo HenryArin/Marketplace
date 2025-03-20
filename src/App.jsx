@@ -4,31 +4,30 @@ import './App.css';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isFading, setIsFading] = useState(false); // Track fade state
+  const [isFading, setIsFading] = useState(false);
+  const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Sign Up
 
-  // Array of image paths in the public folder
+  // Array of image paths
   const slideshowImages = [
     '/Images/Image35.jpg',
     '/Images/Image33.jpg',
     '/Images/Image34.jpg',
   ];
 
-  // Automatic sliding every 5 seconds with fade
+  // Automatic sliding every 10 seconds with fade
   useEffect(() => {
     const slideInterval = setInterval(() => {
-      setIsFading(true); // Start fade-out
+      setIsFading(true);
       setTimeout(() => {
         setCurrentImageIndex((prevIndex) =>
           (prevIndex + 1) % slideshowImages.length
         );
-        setIsFading(false); // Fade-in new image
-      }, 500); // Half-second fade-out before switching
-    }, 10000); // 5000ms = 5 seconds total interval
+        setIsFading(false);
+      }, 500);
+    }, 10000);
 
-    return () => clearInterval(slideInterval); // Cleanup on unmount
+    return () => clearInterval(slideInterval);
   }, [slideshowImages.length]);
 
   const listings = [
@@ -50,24 +49,22 @@ function App() {
         <input id="Top-Search" placeholder="...Search" />
       </div>
 
-     {/* Slideshow with cleaner fade transition */}
-     <div className="slideshow-container">
+      {/* Slideshow */}
+      <div className="slideshow-container">
         <img
           src={slideshowImages[currentImageIndex]}
           alt={`Slide ${currentImageIndex + 1}`}
           className={`pre-footer-image ${isFading ? 'fade-out' : 'fade-in'}`}
           onError={(e) => {
-            e.target.src = '/Images/fallback.jpg'; // Fallback if image fails
+            e.target.src = '/Images/fallback.jpg';
             console.error(`Failed to load ${slideshowImages[currentImageIndex]}`);
           }}
         />
       </div>
 
-     
+      {/* Create Account / Login Section */}
       <div className="CreateAccount">
-      
-     
-      <img src="./Images/Icon.png" className="Account-Icon"></img>
+        <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
 
       <h2 className="Account">Create an Account</h2>
       <input  id="Username" placeholder="Username"></input>
@@ -75,8 +72,10 @@ function App() {
       <button className="Button-Account">Log in</button>
       
 
+        <p className="toggle-text" onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
+        </p>
       </div>
-
 
       <div className="Bottom-Nav"></div>
 

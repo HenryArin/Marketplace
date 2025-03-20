@@ -45,7 +45,7 @@ function App() {
         <button className="Front-Button" onClick={() => setIsModalOpen(true)}>
           Browse
         </button>
-        <p id="Top-Name">Marketplace</p>
+        <h1 id="Top-Name">Marketplace</h1>
         <input id="Top-Search" placeholder="...Search" />
       </div>
 
@@ -66,13 +66,13 @@ function App() {
       <div className="CreateAccount">
         <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
 
-      <h2 className="Account">Create an Account</h2>
+      <h1 id="Create-An-Account">Create an Account</h1>
       <input  id="Username" placeholder="Username"></input>
       <input  id="Password" placeholder="Password"></input>
       <button className="Button-Account">Log in</button>
       
 
-        <p className="toggle-text" onClick={() => setIsLogin(!isLogin)}>
+        <p className="toggle-text" id="Toggle-text" onClick={() => setIsLogin(!isLogin)}>
           {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
         </p>
       </div>

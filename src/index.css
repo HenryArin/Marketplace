@@ -74,13 +74,21 @@ h1 {
   width: 25%;
 }
 
-.Account > h2{
+#Create-An-Account{
   position: fixed;
   z-index: 1;
-  top: 225px;
-  right: 200px;
+  top: 220px;
+  right: 190px;
   color: white;
   font-size: 25px;
+}
+
+#Toggle-text{
+  position: fixed;
+  top: 495px;
+  right: 200px;
+  color: white;
+  font-weight: 100;
 }
 
 #Username, Input{
@@ -90,7 +98,7 @@ h1 {
   color:#273b31;
   position: fixed;
   top: 300px;
-  right: 200px;
+  right: 175px;
 }
 
 #Password, Input{
@@ -100,7 +108,7 @@ h1 {
   color:#273b31;
   position: fixed;
   top: 375px;
-  right: 200px;
+  right: 175px;
 }
 
 .Account-Icon{

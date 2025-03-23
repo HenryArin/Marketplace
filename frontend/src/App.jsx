@@ -157,9 +157,6 @@ function App() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title="Marketplace"
-        loggedIn={loggedIn}
-        onLogout={handleLogout}
       >
         <div name="Top-Line" id="Top-Line"></div>  
         <div name="Hero" id="Hero">

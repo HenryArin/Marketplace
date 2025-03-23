@@ -169,6 +169,8 @@ function App() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        loggedIn={loggedIn}
+        onLogout={handleLogout}
       >
         <div name="Top-Line" id="Top-Line"></div>  
         <div name="Hero" id="Hero">

@@ -1,27 +1,21 @@
 <?php
-// Ensure no output before headers
-ob_start();
+// Add CORS headers
+header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: true');
+
+// Handle preflight OPTIONS request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', dirname(__DIR__) . '/php_errors.log');
-
-// CORS headers
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization");
-header("Access-Control-Allow-Credentials: true");
-
-// Handle preflight OPTIONS request
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    header("Content-Length: 0");
-    header("Content-Type: text/plain");
-    ob_end_flush();
-    exit;
-}
 
 // Set content type for responses
 header('Content-Type: application/json');

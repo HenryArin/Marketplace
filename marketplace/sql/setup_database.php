@@ -13,9 +13,9 @@ $db = new SQLite3($dbPath);
 $db->exec('
 CREATE TABLE IF NOT EXISTS person (
     personID INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    hash TEXT NOT NULL,
     firstName TEXT,
     lastName TEXT,
     phone TEXT,
@@ -53,8 +53,8 @@ $result = $db->query('SELECT COUNT(*) as count FROM person');
 $row = $result->fetchArray();
 if ($row['count'] == 0) {
     $db->exec('
-    INSERT INTO person (username, password, email, firstName, lastName)
-    VALUES ("testuser", "' . password_hash("testpass", PASSWORD_DEFAULT) . '", "test@example.com", "Test", "User")
+    INSERT INTO person (email, password, hash, firstName, lastName)
+    VALUES ("test@example.com", "' . password_hash("testpass", PASSWORD_DEFAULT) . '", "' . password_hash("testpass", PASSWORD_DEFAULT) . '", "Test", "User")
     ');
     echo "Created test user\n";
 }

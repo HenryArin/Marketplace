@@ -11,6 +11,8 @@ const CreateListingView = ({ onClose }) => {
   const [previewImages, setPreviewImages] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
@@ -23,71 +25,62 @@ const CreateListingView = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
-    
+    setError(null);
+    setSuccess(null);
+    setLoading(true);
+
     try {
       const token = localStorage.getItem('authToken');
-      
       if (!token) {
         setError('Please log in to create a listing');
-        setIsSubmitting(false);
+        setLoading(false);
         return;
       }
-      
+
       const formDataToSend = new FormData();
       formDataToSend.append('title', formData.title);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('description', formData.description);
       
-      // Append images to form data
-      if (formData.images.length > 0) {
-        formData.images.forEach((image, index) => {
-          formDataToSend.append(`images[${index}]`, image);
-        });
-      }
-      
-      console.log('Submitting form data...');
+      // Append each image to form data
+      formData.images.forEach((image, index) => {
+        formDataToSend.append(`images[${index}]`, image);
+      });
+
       const response = await fetch('http://localhost:8000/src/create_listing.php', {
         method: 'POST',
-        body: formDataToSend,
         headers: {
           'Authorization': `Bearer ${token}`
-        }
+        },
+        body: formDataToSend
       });
-      
-      // Add debug output
-      console.log('Response status:', response.status);
-      console.log('Response headers:', [...response.headers.entries()]);
-      
-      const text = await response.text();
-      console.log('Response text:', text);
-      
-      try {
-        const data = JSON.parse(text);
-        if (data.success) {
-          alert('Listing created successfully!');
-          // Reset form
-          setFormData({
-            title: '',
-            price: '',
-            description: '',
-            images: []
-          });
-          setPreviewImages([]);
-          onClose(); // Close the modal
-        } else {
-          setError(data.error || 'Failed to create listing');
-        }
-      } catch (err) {
-        console.error('Failed to parse response:', err);
-        setError('Invalid response from server');
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create listing');
       }
+
+      setSuccess('Listing created successfully!');
+      // Reset form
+      setFormData({
+        title: '',
+        price: '',
+        description: '',
+        images: []
+      });
+      setPreviewImages([]);
+      
+      // Clear success message after 3 seconds
+      setTimeout(() => {
+        setSuccess(null);
+      }, 3000);
+
     } catch (err) {
-      console.error('Error submitting form:', err);
-      setError(err.message || 'An error occurred');
+      console.error('Error creating listing:', err);
+      setError(err.message || 'Failed to create listing');
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
@@ -173,13 +166,14 @@ const CreateListingView = ({ onClose }) => {
         </div>
 
         {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
 
         <button 
           type="submit" 
           className="submit-button"
-          disabled={isSubmitting}
+          disabled={isSubmitting || loading}
         >
-          {isSubmitting ? 'Creating...' : 'Create Listing'}
+          {loading ? 'Creating...' : 'Create Listing'}
         </button>
       </form>
     </div>

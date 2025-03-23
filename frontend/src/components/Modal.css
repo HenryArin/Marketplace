@@ -1,0 +1,574 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+  height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Navigation Buttons */
+.navigation-buttons {
+  display: flex;
+  
+  position: fixed;
+  top: 55px;
+  left: 195px;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.navigation-buttons button {
+  min-width: 120px;
+  padding: 10px 20px;
+  background-color: #007bff00;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.navigation-buttons button:hover {
+  background-color: #93b7dd;
+  transform: translateY(-1px);
+}
+
+/* Messages View */
+.messages-container {
+  display: flex;
+  height: 100%;
+  gap: 20px;
+}
+
+.message-list {
+  width: 300px;
+  border-right: 1px solid #eee;
+  overflow-y: auto;
+}
+
+.message-item {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.message-item:hover {
+  background-color: #f8f9fa;
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-sender {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.message-preview {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.message-time {
+  color: #999;
+  font-size: 0.8em;
+}
+
+.message-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+}
+
+.message-chat {
+  flex: 1;
+  padding: 15px;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+/* My Listings View */
+.my-listings-view {
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.listing-detail {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+}
+
+.listing-images {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main-image {
+  height: 300px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.listing-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.action-button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.error-button {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.listings-sidebar {
+  width: 35%;
+  overflow-y: auto;
+}
+
+/* Create Listing Form */
+.create-listing-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.image-upload-container {
+  border: 2px dashed #ddd;
+  padding: 20px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.upload-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.upload-preview {
+  color: #666;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+/* Main View Layout */
+.modal-body {
+  display: flex;
+  gap: 30px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  padding: 0 20px;
+  width: 100%;
+  height: calc(100% - 140px);
+}
+
+/* Reverting listings-container to original layout */
+.listings-container {
+  flex: 1 1 auto;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+
+/* Reverting map-container to original layout */
+.map-container {
+  flex: 0 0 45%;
+  height: 85%;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #666;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 115px;
+  width: 50%;
+  right: 0;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+
+
+.listing-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.listing-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.listing-details {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.listing-name {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.listing-price {
+  color: #007bff;
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-top: auto;
+}
+
+.modal-title {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #000;
+}
+
+.login-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-input, input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  color: #666;
+}
+
+.modal-close:hover {
+  color: #000;
+}
+
+/* Dark Mode Styles */
+.dark-mode .modal-content {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+.dark-mode .modal-header {
+  border-bottom-color: #333;
+}
+
+.dark-mode .navigation-buttons button {
+  background-color: #2c2c2c;
+}
+
+.dark-mode .navigation-buttons button:hover {
+  background-color: #404040;
+}
+
+.dark-mode .map-container {
+  background-color: #2c2c2c;
+  border-color: #404040;
+  color: #fff;
+}
+
+.dark-mode .listing-item {
+  background-color: #2c2c2c;
+  border-color: #404040;
+}
+
+.dark-mode .listing-image {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .listing-name {
+  color: #fff;
+}
+
+.dark-mode .listing-price {
+  color: #66b3ff;
+}
+
+.dark-mode .modal-close {
+  color: #fff;
+}
+
+.dark-mode .search-input {
+  background-color: #2c2c2c;
+  border-color: #404040;
+  color: #fff;
+}
+
+.dark-mode .search-input::placeholder {
+  color: #888;
+}
+
+.dark-mode .message-item {
+  border-bottom-color: #333;
+}
+
+.dark-mode .message-item:hover {
+  background-color: #2c2c2c;
+}
+
+.dark-mode .message-preview {
+  color: #bbb;
+}
+
+.dark-mode .message-time {
+  color: #888;
+}
+
+.dark-mode .message-chat {
+  background-color: #2c2c2c;
+  color: #fff;
+}
+
+/* Theme Toggle Button */
+.header-left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.theme-toggle {
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+.dark-mode .theme-toggle {
+  border-color: #404040;
+}
+
+.dark-mode .modal-title {
+  color: #fff;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    max-width: 600px;
+  }
+
+  .modal-header {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  .navigation-buttons button {
+    min-width: 100px;
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .listing-item {
+    padding: 10px;
+  }
+
+  .listing-name {
+    font-size: 1em;
+  }
+
+  .listing-price {
+    font-size: 1em;
+  }
+} 
+

@@ -1,0 +1,380 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #273b31;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#Top-Name > p{
+  color: white;
+  position: fixed;
+  top: 35px;
+  font-size: 35px;
+  right: 44%;
+}
+
+#Top-Search, input{
+    background-color: white;
+    color:#273b31;
+    border-radius: 12px;
+    position: fixed;
+    top: 50px;
+    right: 45px;
+    padding: 10px 20px 10px 20px;
+}
+
+
+.CreateAccount{
+  background-color: transparent;
+  position: fixed;
+  top: 150px;
+  right: 100px;
+  border: 2px solid white;
+  height: 400px;
+  width: 400px;
+}
+
+.Image{
+  position: fixed;
+  z-index: 1;
+  left: 150px;
+  top: 200px;
+  height: 65%;
+  width: 25%;
+}
+
+#Create-An-Account{
+  position: fixed;
+  z-index: 1;
+  top: 220px;
+  right: 190px;
+  color: white;
+  font-size: 25px;
+}
+
+#Toggle-text{
+  position: fixed;
+  top: 495px;
+  right: 200px;
+  color: white;
+  font-weight: 100;
+}
+
+#Username, Input{
+  background-color: white;
+  z-index: 1;
+  padding: 15px 20px 15px 20px;
+  color:#273b31;
+  position: fixed;
+  top: 300px;
+  right: 175px;
+}
+
+#Password, Input{
+  background-color: white;
+  z-index: 1;
+  padding: 15px 20px 15px 20px;
+  color:#273b31;
+  position: fixed;
+  top: 375px;
+  right: 175px;
+}
+
+.Account-Icon{
+  color: white;
+  height: 75px;
+  width: 75px;
+  position: fixed;
+  top: 165px;
+  right: 265px;
+}
+
+/* ==========================================================
+SlideShow Image CSS
+============================================================= */
+
+.slideshow-container {
+  position: fixed;
+  z-index: 1;
+  left: 150px;
+  top: 200px;
+  width: 25%; /* Matches the image width */
+  height: 65%; /* Matches the image height */
+  display: flex;
+  justify-content: center; /* Center the image horizontally within the container */
+  align-items: center; /* Center vertically within the container */
+}
+
+.pre-footer-image {
+  width: 100%; /* Fills the container width (25% of viewport) */
+  height: 100%; /* Fills the container height (65% of viewport) */
+  object-fit: cover; /* Ensures all images scale uniformly to fit the container */
+  display: block;
+  transition: opacity 0.5s ease-in-out; /* Smooth 0.5-second fade */
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}
+
+
+ /* ====================================================== */
+
+
+ /* ==========================================================
+Right Modal CSS
+============================================================= */
+
+#Top-Line {
+  width: 500px;
+  height: 1px;
+  position: fixed;
+  top: 20%;
+  left: 25px;
+  background-color: black;
+
+}
+
+#Hero > h1 {
+  color: black;
+  Font-size: 25px;
+  width: 400px;
+  font-weight: 100;
+  position: fixed;
+  left: 20px;
+  top: 185px;
+  text-align: left;
+}
+
+
+#Button-Container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px; /* Adds some padding to match the spacing in the image */
+ 
+}
+
+#Button-Rows {
+  display: flex;
+  
+  gap: 10px;
+  margin-bottom: 20px;
+  
+  position: fixed;
+  left: 165px;
+  z-index: 1;
+  top: 315px;
+}
+
+#Button-Rows .search-container {
+  position: relative;
+  flex: 1;
+}
+
+#Button-Rows .search-input {
+  width: 100px;
+  padding: 8px 30px 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  top: 315px;
+  left: 20px;
+}
+
+#Button-Rows .the-filter-button{
+  background-color: #fff; /* White background to match the image */
+  border: 1px solid #ccc; /* Gray border to match the image */
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #000; /* Black text to match the image */
+}
+
+
+#Button-Rows .filter-button {
+  background-color: #fff; /* White background to match the image */
+  border: 1px solid #ccc; /* Gray border to match the image */
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #000; /* Black text to match the image */
+}
+
+#Button-Rows .filter-button:hover {
+  background-color: #f5f5f5; /* Light gray hover effect */
+}
+
+
+#List-Container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  position: fixed;
+  top: 375px;
+  left: 45px;
+}
+
+#List-Grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-template-rows: repeat(2, auto); /* 2 rows */
+  gap: 40px; /* Spacing between images */
+  flex: 1;
+}
+
+#List-Grid .listing-item {
+  display: flex;
+  justify-content: center; /* Centers the image within the grid cell */
+}
+
+.List-Image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* Ensures the image scales properly within the 250x250 box */
+  border-radius: 8px; /* Matches the rounded corners in the image */
+}
+
+
+
+
+
+#Bottom-Line {
+  width: 1000px;
+  height: 1px;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  background-color: black;
+}
+
+
+
+/* ============================================================== */
+
+
+
+
+.Button-Account{
+  color: white;
+  z-index: 1;
+  position: fixed;
+  top: 450px;
+  padding: 15px 45px 15px 45px;
+  background-color:#456957;
+  right: 235px;
+}
+
+
+
+.Bottom-Nav{
+  background-color: white;
+  position: fixed;
+  top: 625px;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  padding: 0;
+  margin: 0;
+}
+
+.Front-Button{
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.8em 5em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #fefefe;
+  color:#273b31;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  position: fixed;
+  top: 50px;
+  left: 15%;
+  transform: translateX(-50%);
+
+}
+
+.Front-Icon{
+  position: fixed;
+  font-size: 25px;
+  width: 50px;
+  height: 50px;
+  top: 20%;
+  left: 49%;
+}
+
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #669bbc;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}

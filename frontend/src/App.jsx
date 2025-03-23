@@ -54,7 +54,7 @@ function App() {
       });
 
       const text = await response.text();
-      if (text.includes('Login Successful!')) {
+      if (text.includes('Login Successful!') || text.includes('Account Successfully Created!')) {
         alert(isLogin ? 'Login successful!' : 'Account created successfully!');
         // Clear form
         setEmail('');

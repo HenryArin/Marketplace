@@ -10,6 +10,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
   // Array of image paths
   const slideshowImages = [
@@ -57,11 +58,11 @@ function App() {
       if (text.includes('Login Successful!') || text.includes('Account Successfully Created!')) {
         alert(isLogin ? 'Login successful!' : 'Account created successfully!');
         // Clear form
-        setEmail('');
         setPassword('');
         // Set logged in state if login was successful
         if (isLogin) {
           setLoggedIn(true);
+          setUserEmail(email);
         }
         // Optionally switch back to login view after successful signup
         if (!isLogin) {
@@ -78,6 +79,7 @@ function App() {
 
   const handleLogout = () => {
     setLoggedIn(false);
+    setUserEmail('');
   };
 
   const listings = [
@@ -113,7 +115,7 @@ function App() {
       </div>
 
       {/* Create Account / Login Section */}
-      {!loggedIn && (
+      {!loggedIn ? (
         <div className="CreateAccount">
           <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
 
@@ -139,6 +141,14 @@ function App() {
           <p className="toggle-text" id="Toggle-text" onClick={() => setIsLogin(!isLogin)}>
             {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
           </p>
+        </div>
+      ) : (
+        <div className="CreateAccount">
+          <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
+          <h1 id="Create-An-Account" style={{ color: 'white' }}>Welcome, {userEmail}!</h1>
+          <button className="Button-Account" onClick={handleLogout}>
+            Log Out
+          </button>
         </div>
       )}
 

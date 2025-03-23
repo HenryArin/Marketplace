@@ -14,7 +14,7 @@
     $insertForm->build_form();
     
     if (isset($_POST["loginAccount"])) {
-        $search = $db->prepare("SELECT fname, hash FROM person where email = :Email");
+        $search = $db->prepare("SELECT hash FROM person where email = :Email");
 
         $search->bindValue(":Email", $_POST["emailaddress"], SQLITE3_TEXT);
         
@@ -26,15 +26,12 @@
         }
 
         $hash = "";
-        $name = "";
         while($g = $r->fetchArray(SQLITE3_ASSOC)) {
             $hash = $g['hash'];
-            $name = $g['fname'];
         }
         
         if (password_verify($_POST["password"], $hash)) {
             echo "Login Successful!<br>";
-            echo "Welcome, $name.<br>";
         } else {
             echo "Login Failed!<br>";
         } 

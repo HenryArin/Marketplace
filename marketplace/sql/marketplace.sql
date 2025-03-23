@@ -1,17 +1,12 @@
--- **************************************************************************************
 -- SQLITE3 file for CMPS 3390 Project 2
 -- Spring 2025
 -- AUTH: Luhar, Priyanshu pluhar@csub.edu
 -- DATE: Mar 04, 2025
 
--- **************************************************************************************
 -- TABLES
 
 CREATE TABLE IF NOT EXISTS person (
     userID integer primary key autoincrement,
-    username text,
-    fname text,
-    lname text,
     email text not null,
     hash text not null,
     satisfactionRate integer default 0,
@@ -99,10 +94,5 @@ CREATE TABLE IF NOT EXISTS agreement (
     foreign key (listingID) references listing(listingID) on update cascade on delete set null
 );
 
--- **************************************************************************************
--- DEMO DATA
-
--- **************************************************************************************
 -- FLAGS
-
 PRAGMA foreign_keys = ON;

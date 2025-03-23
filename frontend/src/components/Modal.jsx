@@ -94,7 +94,7 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
           
         </div>
         
-        {currentView === 'main' && (
+        {currentView === 'main' && loggedIn && (
           <div className="navigation-buttons">
             <button onClick={() => setCurrentView('messages')}>My Listings</button>
             <button onClick={() => setCurrentView('myListings')}>Create Listings</button>

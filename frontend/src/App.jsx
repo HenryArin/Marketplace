@@ -54,13 +54,20 @@ function App() {
         formData.append('createAccount', true);
       }
 
+      console.log('Submitting auth data...');
       const endpoint = isLogin ? 'login.php' : 'signup.php';
-      const response = await fetch(`http://localhost:8000/${endpoint}`, {
+      const response = await fetch(`http://localhost:8000/src/${endpoint}`, {
         method: 'POST',
         body: formData,
       });
 
+      // Add debug output
+      console.log('Response status:', response.status);
+      console.log('Response headers:', [...response.headers.entries()]);
+
       const text = await response.text();
+      console.log('Response text:', text);
+
       if (text.includes('Login Successful!') || text.includes('Account Successfully Created!')) {
         alert(isLogin ? 'Login successful!' : 'Account created successfully!');
         // Clear form

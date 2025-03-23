@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Modal.css';
 import MessagesView from './MessagesView';
 import MyListingsView from './MyListingsView';
@@ -7,18 +7,6 @@ import CreateListingView from './CreateListingView';
 const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState('main'); // main, messages, myListings, createListing
-  
-  // Initialize dark mode from localStorage or default to false
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    return savedMode ? JSON.parse(savedMode) : false;
-  });
-
-  // Save dark mode preference whenever it changes
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
-
   
   if (!isOpen) return null;
 
@@ -31,15 +19,6 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
     setSearchQuery(e.target.value);
     // Add search functionality here
     console.log('Searching for:', e.target.value);
-  };
-
-  // Function to explicitly set to default/light mode
-  const setDefaultMode = () => {
-    setIsDarkMode(false);
-  };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(prevMode => !prevMode);
   };
 
   const renderView = () => {
@@ -60,7 +39,7 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
   };
 
   return (
-    <div className={`modal-overlay ${isDarkMode ? 'dark-mode' : ''}`}>
+    <div className="modal-overlay">
       <div className="modal-content">
         <button className="modal-close" onClick={onClose}>
           ×
@@ -76,13 +55,6 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
                 Log In
               </button>
             )}
-            <button 
-              className="theme-toggle" 
-              onClick={toggleDarkMode}
-              title={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {isDarkMode ? '☀️' : '🌙'}
-            </button>
           </div>
           <h2 
             className="modal-title" 
@@ -91,7 +63,6 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
           >
             {currentView === 'main' ? title : 'Back to Listings'}
           </h2>
-          
         </div>
         
         {currentView === 'main' && loggedIn && (

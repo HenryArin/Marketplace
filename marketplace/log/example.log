@@ -1,0 +1,4 @@
+// The log file will generally consist of the
+// addition or deletion of an event with their
+// ID and organzier ID to retrive an event if
+// it was deleted from the database

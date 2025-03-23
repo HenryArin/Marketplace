@@ -1,0 +1,7 @@
+Read the documentation for the following things
+Add more if needed for documentation purposes
+
+01. SQLITE3
+02. JavaScript
+03. GoogleMaps API
+04. PHP hashing

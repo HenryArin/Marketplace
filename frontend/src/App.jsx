@@ -17,6 +17,7 @@ function App() {
     // Initialize userEmail state from localStorage
     return localStorage.getItem('userEmail') || '';
   });
+  const [modalMode, setModalMode] = useState(null);
 
   // Array of image paths
   const slideshowImages = [
@@ -59,6 +60,10 @@ function App() {
       const response = await fetch(`http://localhost:8000/src/${endpoint}`, {
         method: 'POST',
         body: formData,
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json'
+        }
       });
 
       // Add debug output
@@ -68,7 +73,19 @@ function App() {
       const text = await response.text();
       console.log('Response text:', text);
 
-      if (text.includes('Login Successful!') || text.includes('Account Successfully Created!')) {
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('Failed to parse JSON:', e);
+        throw new Error('Server returned invalid JSON response');
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Authentication failed');
+      }
+
+      if (data.message && (data.message.includes('Login Successful!') || data.message.includes('Account Successfully Created!'))) {
         alert(isLogin ? 'Login successful!' : 'Account created successfully!');
         // Clear form
         setPassword('');
@@ -79,13 +96,19 @@ function App() {
           // Save to localStorage
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('userEmail', email);
+          
+          // Store auth token if it exists
+          if (data.token) {
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userID', data.userID);
+          }
         }
         // Optionally switch back to login view after successful signup
         if (!isLogin) {
           setIsLogin(true);
         }
       } else {
-        alert(isLogin ? 'Login failed. Please check your credentials.' : 'Signup failed. Please try again.');
+        throw new Error(data.error || 'Authentication failed');
       }
     } catch (error) {
       console.error('Error during authentication:', error);
@@ -175,7 +198,11 @@ function App() {
 
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+          setModalMode(null);
+        }}
+        mode={modalMode}
         loggedIn={loggedIn}
         onLogout={handleLogout}
       >

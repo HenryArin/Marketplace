@@ -25,52 +25,67 @@ const CreateListingView = ({ onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError('');
-
+    
     try {
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        setError('Please log in to create a listing');
+        setIsSubmitting(false);
+        return;
+      }
+      
       const formDataToSend = new FormData();
       formDataToSend.append('title', formData.title);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('description', formData.description);
       
-      // Append each image file
-      formData.images.forEach((image, index) => {
-        formDataToSend.append('images[]', image);
-      });
-
-      console.log('Submitting form data...');
+      // Append images to form data
+      if (formData.images.length > 0) {
+        formData.images.forEach((image, index) => {
+          formDataToSend.append(`images[${index}]`, image);
+        });
+      }
       
-      // Use a simpler fetch approach
+      console.log('Submitting form data...');
       const response = await fetch('http://localhost:8000/src/create_listing.php', {
         method: 'POST',
         body: formDataToSend,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
-
+      
       // Add debug output
       console.log('Response status:', response.status);
       console.log('Response headers:', [...response.headers.entries()]);
-
-      // Get the response text first
-      const responseText = await response.text();
-      console.log('Response text:', responseText);
-
-      let data;
+      
+      const text = await response.text();
+      console.log('Response text:', text);
+      
       try {
-        data = JSON.parse(responseText);
-      } catch (e) {
-        console.error('Failed to parse JSON:', e);
-        throw new Error('Server returned invalid JSON response');
+        const data = JSON.parse(text);
+        if (data.success) {
+          alert('Listing created successfully!');
+          // Reset form
+          setFormData({
+            title: '',
+            price: '',
+            description: '',
+            images: []
+          });
+          setPreviewImages([]);
+          onClose(); // Close the modal
+        } else {
+          setError(data.error || 'Failed to create listing');
+        }
+      } catch (err) {
+        console.error('Failed to parse response:', err);
+        setError('Invalid response from server');
       }
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to create listing');
-      }
-
-      // Clear form and close modal
-      setFormData({ title: '', price: '', description: '', images: [] });
-      setPreviewImages([]);
-      onClose();
     } catch (err) {
-      setError(err.message);
+      console.error('Error submitting form:', err);
+      setError(err.message || 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }

@@ -10,8 +10,8 @@ ini_set('error_log', dirname(__DIR__) . '/php_errors.log');
 
 // CORS headers
 header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Accept");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
 // Handle preflight OPTIONS request
@@ -69,24 +69,61 @@ try {
         $db->exec('ALTER TABLE listing ADD COLUMN price TEXT');
     }
     
-    // Start session for user authentication
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    // Get authorization header
+    $headers = getallheaders();
+    $authHeader = $headers['Authorization'] ?? '';
+    $token = '';
+    
+    // Extract token from Authorization header
+    if (!empty($authHeader) && preg_match('/Bearer\s+(.*)$/i', $authHeader, $matches)) {
+        $token = $matches[1];
+    } else {
+        // Try getting token from POST data as fallback
+        $token = $_POST['token'] ?? '';
     }
     
-    // For testing purposes, bypass authentication temporarily
-    // Comment this out in production
-    if (!isset($_SESSION['userID'])) {
-        $_SESSION['userID'] = 1; // Use a default user ID for testing
-        error_log("Using test user ID: 1");
+    if (empty($token)) {
+        error_log('No token provided');
+        sendJsonResponse(['error' => 'Authentication required'], 401);
     }
     
-    // Get the current user ID from the session
-    if (!isset($_SESSION['userID'])) {
-        error_log("User not authenticated");
-        sendJsonResponse(['error' => 'User not authenticated'], 401);
+    // Check if auth_tokens table exists
+    $db->exec('CREATE TABLE IF NOT EXISTS auth_tokens (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        token TEXT NOT NULL,
+        expires TEXT NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES person(personID)
+    )');
+    
+    // Verify token
+    $tokenSql = 'SELECT user_id, expires FROM auth_tokens WHERE token = :token';
+    $tokenStmt = $db->prepare($tokenSql);
+    if (!$tokenStmt) {
+        throw new Exception('Failed to prepare token statement: ' . $db->lastErrorMsg());
     }
-    $listerID = $_SESSION['userID'];
+    
+    $tokenStmt->bindValue(':token', $token, SQLITE3_TEXT);
+    $tokenResult = $tokenStmt->execute();
+    
+    if (!$tokenResult) {
+        throw new Exception('Failed to verify token: ' . $db->lastErrorMsg());
+    }
+    
+    $tokenData = $tokenResult->fetchArray(SQLITE3_ASSOC);
+    if (!$tokenData) {
+        error_log('Invalid token');
+        sendJsonResponse(['error' => 'Invalid or expired token'], 401);
+    }
+    
+    // Check if token is expired
+    $now = date('Y-m-d H:i:s');
+    if ($tokenData['expires'] < $now) {
+        error_log('Token expired');
+        sendJsonResponse(['error' => 'Token expired'], 401);
+    }
+    
+    $listerID = $tokenData['user_id'];
     error_log("Using listerID: " . $listerID);
     
     // Get form data

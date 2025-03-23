@@ -3,10 +3,11 @@ import './Modal.css';
 import MessagesView from './MessagesView';
 import MyListingsView from './MyListingsView';
 import CreateListingView from './CreateListingView';
+import UserListingsView from './UserListingsView';
 
-const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
+const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout, mode }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [currentView, setCurrentView] = useState('main'); // main, messages, myListings, createListing
+  const [currentView, setCurrentView] = useState(mode);
   
   if (!isOpen) return null;
 
@@ -25,10 +26,10 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
     switch (currentView) {
       case 'messages':
         return <MessagesView />;
-      case 'myListings':
-        return <MyListingsView />;
-      case 'createListing':
-        return <CreateListingView />;
+      case 'my-listings':
+        return <UserListingsView onClose={onClose} />;
+      case 'create':
+        return <CreateListingView onClose={onClose} />;
       default:
         return (
           <div className="modal-body">
@@ -67,8 +68,8 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
         
         {currentView === 'main' && loggedIn && (
           <div className="navigation-buttons">
-            <button onClick={() => setCurrentView('myListings')}>My Listings</button>
-            <button onClick={() => setCurrentView('createListing')}>Create Listings</button>
+            <button onClick={() => setCurrentView('my-listings')}>My Listings</button>
+            <button onClick={() => setCurrentView('create')}>Create Listings</button>
             <button onClick={() => setCurrentView('messages')}>Messages</button>
           </div>
         )}

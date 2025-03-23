@@ -32,29 +32,42 @@ function App() {
     return () => clearInterval(slideInterval);
   }, [slideshowImages.length]);
 
-  const handleLogin = async (e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
       formData.append('emailaddress', email);
       formData.append('password', password);
-      formData.append('loginAccount', true);
+      
+      // Add the appropriate action based on whether it's login or signup
+      if (isLogin) {
+        formData.append('loginAccount', true);
+      } else {
+        formData.append('createAccount', true);
+      }
 
-      const response = await fetch('http://localhost:8000/login.php', {
+      const endpoint = isLogin ? 'login.php' : 'signup.php';
+      const response = await fetch(`http://localhost:8000/${endpoint}`, {
         method: 'POST',
         body: formData,
       });
 
       const text = await response.text();
-      if (text.includes('Login Successful')) {
-        alert('Login successful!');
-        // Add any additional logic after successful login
+      if (text.includes('Success')) {
+        alert(isLogin ? 'Login successful!' : 'Account created successfully!');
+        // Clear form
+        setEmail('');
+        setPassword('');
+        // Optionally switch back to login view after successful signup
+        if (!isLogin) {
+          setIsLogin(true);
+        }
       } else {
-        alert('Login failed. Please check your credentials.');
+        alert(isLogin ? 'Login failed. Please check your credentials.' : 'Signup failed. Please try again.');
       }
     } catch (error) {
-      console.error('Error during login:', error);
-      alert('Error during login. Please try again.');
+      console.error('Error during authentication:', error);
+      alert('Error during authentication. Please try again.');
     }
   };
 
@@ -109,7 +122,7 @@ function App() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="Button-Account" onClick={handleLogin}>
+        <button className="Button-Account" onClick={handleAuth}>
           {isLogin ? 'Log in' : 'Sign up'}
         </button>
 

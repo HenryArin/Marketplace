@@ -9,8 +9,14 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+  const [loggedIn, setLoggedIn] = useState(() => {
+    // Initialize loggedIn state from localStorage
+    return localStorage.getItem('loggedIn') === 'true';
+  });
+  const [userEmail, setUserEmail] = useState(() => {
+    // Initialize userEmail state from localStorage
+    return localStorage.getItem('userEmail') || '';
+  });
 
   // Array of image paths
   const slideshowImages = [
@@ -63,6 +69,9 @@ function App() {
         if (isLogin) {
           setLoggedIn(true);
           setUserEmail(email);
+          // Save to localStorage
+          localStorage.setItem('loggedIn', 'true');
+          localStorage.setItem('userEmail', email);
         }
         // Optionally switch back to login view after successful signup
         if (!isLogin) {
@@ -80,6 +89,9 @@ function App() {
   const handleLogout = () => {
     setLoggedIn(false);
     setUserEmail('');
+    // Clear localStorage
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('userEmail');
   };
 
   const listings = [

@@ -4,24 +4,24 @@ import './Modal.css';
 const UserListingsView = ({ onClose }) => {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchUserListings();
-  }, []);
-
+  // Function to fetch user listings
   const fetchUserListings = async () => {
+    setIsLoading(true);
+    setError(null);
+    
     try {
+      console.log('Fetching user listings...');
       const token = localStorage.getItem('authToken');
-      
       if (!token) {
-        setError('Please log in to view your listings');
+        setError('You must be logged in to view your listings');
         setIsLoading(false);
         return;
       }
-      
+
       const response = await fetch('http://localhost:8000/src/get_user_listings.php', {
-        credentials: 'include',
+        method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -29,57 +29,69 @@ const UserListingsView = ({ onClose }) => {
       });
 
       if (!response.ok) {
+        // Handle 401 Unauthorized specifically
         if (response.status === 401) {
-          // Clear invalid token
           localStorage.removeItem('authToken');
-          throw new Error('Please log in to view your listings');
+          throw new Error('Your session has expired. Please log in again.');
         }
         throw new Error('Failed to fetch listings');
       }
 
       const data = await response.json();
-      setListings(data.listings);
+      console.log('Listings received:', data);
+      setListings(data.listings || []);
     } catch (err) {
+      console.error('Error fetching listings:', err);
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   };
 
+  // Fetch listings when component mounts
+  useEffect(() => {
+    fetchUserListings();
+    
+    // Uncomment this if you want to periodically refresh listings
+    // const intervalId = setInterval(fetchUserListings, 10000); // Refresh every 10 seconds
+    // return () => clearInterval(intervalId); // Clean up on unmount
+  }, []);
+
   const handleDeleteListing = async (listingID) => {
     if (!window.confirm('Are you sure you want to delete this listing?')) {
       return;
     }
 
+    setIsLoading(true);
     try {
       const token = localStorage.getItem('authToken');
-      
       if (!token) {
-        setError('Please log in to delete listings');
+        setError('You must be logged in to delete a listing');
+        setIsLoading(false);
         return;
       }
-      
+
       const response = await fetch(`http://localhost:8000/src/delete_listing.php?id=${listingID}`, {
         method: 'DELETE',
-        credentials: 'include',
         headers: {
-          'Accept': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
 
       if (!response.ok) {
-        if (response.status === 401) {
-          localStorage.removeItem('authToken');
-          throw new Error('Please log in to delete listings');
-        }
-        throw new Error('Failed to delete listing');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to delete listing');
       }
 
-      // Refresh listings after deletion
-      fetchUserListings();
+      // Remove the deleted listing from state
+      setListings(listings.filter(listing => listing.listingID !== listingID));
+      
+      console.log(`Successfully deleted listing ${listingID}`);
     } catch (err) {
-      setError(err.message);
+      console.error('Error deleting listing:', err);
+      setError(err.message || 'Failed to delete listing');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -113,12 +125,12 @@ const UserListingsView = ({ onClose }) => {
                     src={`http://localhost:8000/img/listings/${listing.images[0]}`} 
                     alt={listing.title}
                     onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                      e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
                     }}
                   />
                 ) : (
                   <img 
-                    src="https://via.placeholder.com/300x200?text=No+Image" 
+                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=" 
                     alt="No image available" 
                   />
                 )}

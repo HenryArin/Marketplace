@@ -27,7 +27,7 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout, mode }) =
       case 'messages':
         return <MessagesView />;
       case 'my-listings':
-        return <UserListingsView onClose={onClose} />;
+        return <UserListingsView key={Date.now()} onClose={onClose} />;
       case 'create':
         return <CreateListingView onClose={onClose} />;
       default:

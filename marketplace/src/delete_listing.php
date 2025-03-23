@@ -5,11 +5,11 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', dirname(__DIR__) . '/php_errors.log');
 
-// CORS headers
-header("Access-Control-Allow-Origin: http://localhost:5173");
-header("Access-Control-Allow-Methods: DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Accept");
-header("Access-Control-Allow-Credentials: true");
+// Add CORS headers
+header('Access-Control-Allow-Origin: http://localhost:5173');
+header('Access-Control-Allow-Methods: DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Credentials: true');
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -36,22 +36,67 @@ if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
 }
 
 try {
-    // Start session for user authentication
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    // Get token from Authorization header
+    $authHeader = isset($_SERVER['HTTP_AUTHORIZATION']) ? $_SERVER['HTTP_AUTHORIZATION'] : '';
+    $token = '';
+    
+    if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
+        $token = $matches[1];
     }
     
-    // Check if user is authenticated
-    if (!isset($_SESSION['userID'])) {
-        sendJsonResponse(['error' => 'User not authenticated'], 401);
+    if (empty($token)) {
+        sendJsonResponse(['error' => 'Authentication token required'], 401);
     }
     
-    $userID = $_SESSION['userID'];
+    // Check if auth_tokens table exists
+    $checkTableStmt = $db->prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='auth_tokens'");
+    $checkTableResult = $checkTableStmt->execute();
+    $tableExists = false;
+    
+    while ($row = $checkTableResult->fetchArray(SQLITE3_ASSOC)) {
+        if ($row['name'] === 'auth_tokens') {
+            $tableExists = true;
+            break;
+        }
+    }
+    
+    if (!$tableExists) {
+        sendJsonResponse(['error' => 'Authentication system not properly configured'], 500);
+    }
+    
+    // Verify token in database
+    $stmt = $db->prepare('SELECT user_id, expires FROM auth_tokens WHERE token = :token');
+    $stmt->bindValue(':token', $token, SQLITE3_TEXT);
+    $result = $stmt->execute();
+    
+    if (!$result) {
+        sendJsonResponse(['error' => 'Authentication failed'], 401);
+    }
+    
+    $tokenData = $result->fetchArray(SQLITE3_ASSOC);
+    
+    if (!$tokenData) {
+        sendJsonResponse(['error' => 'Invalid authentication token'], 401);
+    }
+    
+    // Check if token has expired
+    if (strtotime($tokenData['expires']) < time()) {
+        // Remove expired token
+        $removeStmt = $db->prepare('DELETE FROM auth_tokens WHERE token = :token');
+        $removeStmt->bindValue(':token', $token, SQLITE3_TEXT);
+        $removeStmt->execute();
+        
+        sendJsonResponse(['error' => 'Authentication token expired'], 401);
+    }
+    
+    $userID = $tokenData['user_id'];
     $listingID = $_GET['id'] ?? null;
     
     if (!$listingID) {
         sendJsonResponse(['error' => 'Listing ID is required'], 400);
     }
+    
+    error_log("Attempting to delete listing ID: $listingID for user ID: $userID");
     
     // First verify that the listing belongs to the user
     $checkSql = 'SELECT listerID FROM listing WHERE listingID = :listingID';
@@ -68,9 +113,17 @@ try {
     }
     
     $listing = $result->fetchArray(SQLITE3_ASSOC);
-    if (!$listing || $listing['listerID'] != $userID) {
+    if (!$listing) {
+        error_log("Listing ID $listingID not found in database");
+        sendJsonResponse(['error' => 'Listing not found'], 404);
+    }
+    
+    if ($listing['listerID'] != $userID) {
+        error_log("User ID $userID not authorized to delete listing ID $listingID (owned by User ID {$listing['listerID']})");
         sendJsonResponse(['error' => 'Unauthorized to delete this listing'], 403);
     }
+    
+    error_log("User ID $userID authorized to delete listing ID $listingID");
     
     // Get image paths before deleting the listing
     $imagesSql = 'SELECT fullpath FROM images WHERE listingID = :listingID';
@@ -102,6 +155,9 @@ try {
     if (!$deleteStmt->execute()) {
         throw new Exception('Failed to delete listing: ' . $db->lastErrorMsg());
     }
+    
+    $changes = $db->changes();
+    error_log("Deleted $changes rows from listing table for listing ID $listingID");
     
     // Delete the actual image files
     $uploadDir = dirname(__DIR__) . '/img/listings/';

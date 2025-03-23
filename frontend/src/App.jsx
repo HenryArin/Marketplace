@@ -9,6 +9,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
 
   // Array of image paths
   const slideshowImages = [
@@ -53,11 +54,15 @@ function App() {
       });
 
       const text = await response.text();
-      if (text.includes('Success')) {
+      if (text.includes('Login Successful!')) {
         alert(isLogin ? 'Login successful!' : 'Account created successfully!');
         // Clear form
         setEmail('');
         setPassword('');
+        // Set logged in state if login was successful
+        if (isLogin) {
+          setLoggedIn(true);
+        }
         // Optionally switch back to login view after successful signup
         if (!isLogin) {
           setIsLogin(true);
@@ -69,6 +74,10 @@ function App() {
       console.error('Error during authentication:', error);
       alert('Error during authentication. Please try again.');
     }
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
   };
 
   const listings = [
@@ -104,38 +113,43 @@ function App() {
       </div>
 
       {/* Create Account / Login Section */}
-      <div className="CreateAccount">
-        <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
+      {!loggedIn && (
+        <div className="CreateAccount">
+          <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
 
-        <h1 id="Create-An-Account">{isLogin ? 'Login' : 'Create an Account'}</h1>
-        <input
-          id="Username"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          id="Password"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="Button-Account" onClick={handleAuth}>
-          {isLogin ? 'Log in' : 'Sign up'}
-        </button>
+          <h1 id="Create-An-Account">{isLogin ? 'Login' : 'Create an Account'}</h1>
+          <input
+            id="Username"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            id="Password"
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="Button-Account" onClick={handleAuth}>
+            {isLogin ? 'Log in' : 'Sign up'}
+          </button>
 
-        <p className="toggle-text" id="Toggle-text" onClick={() => setIsLogin(!isLogin)}>
-          {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
-        </p>
-      </div>
+          <p className="toggle-text" id="Toggle-text" onClick={() => setIsLogin(!isLogin)}>
+            {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
+          </p>
+        </div>
+      )}
 
       <div className="Bottom-Nav"></div>
 
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        title="Marketplace"
+        loggedIn={loggedIn}
+        onLogout={handleLogout}
       >
         <div name="Top-Line" id="Top-Line"></div>  
         <div name="Hero" id="Hero">

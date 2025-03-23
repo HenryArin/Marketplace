@@ -4,7 +4,7 @@ import MessagesView from './MessagesView';
 import MyListingsView from './MyListingsView';
 import CreateListingView from './CreateListingView';
 
-const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
+const Modal = ({ isOpen, onClose, children, title }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState('main'); // main, messages, myListings, createListing
   
@@ -23,8 +23,8 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
   if (!isOpen) return null;
 
   const handleLogin = () => {
-    // Close the modal to show the login form
-    onClose();
+    // Add login functionality here
+    console.log('Login clicked');
   };
 
   const handleSearch = (e) => {
@@ -67,15 +67,9 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
         </button>
         <div className="modal-header">
           <div className="header-left">
-            {loggedIn ? (
-              <button className="login-button" onClick={onLogout}>
-                Log Out
-              </button>
-            ) : (
-              <button className="login-button" onClick={handleLogin}>
-                Log In
-              </button>
-            )}
+            <button className="login-button" onClick={handleLogin}>
+              Log In
+            </button>
             <button 
               className="theme-toggle" 
               onClick={toggleDarkMode}

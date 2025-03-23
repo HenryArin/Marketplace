@@ -36,7 +36,7 @@ h1 {
   line-height: 1.1;
 }
 /* removed >p */
-#Top-Name {
+#Top-Name  {
   color: white;
   position: fixed;
   top: 35px;
@@ -78,7 +78,7 @@ h1 {
   position: fixed;
   z-index: 1;
   top: 230px;
-  right: 270px;
+  right: 160px;
   color: white;
   font-size: 25px;
 }

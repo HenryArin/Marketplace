@@ -97,9 +97,9 @@ const UserListingsView = ({ onClose }) => {
   }
 
   return (
-    <div className="modal-body">
+    <div className="user-listings">
       <h2>My Listings</h2>
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className="error">{error}</div>}
       
       {listings.length === 0 ? (
         <div className="no-listings">You haven't created any listings yet.</div>
@@ -107,15 +107,20 @@ const UserListingsView = ({ onClose }) => {
         <div className="listings-grid">
           {listings.map((listing) => (
             <div key={listing.listingID} className="listing-card">
-              <div className="listing-images">
+              <div className="listing-image">
                 {listing.images && listing.images.length > 0 ? (
                   <img 
                     src={`http://localhost:8000/img/listings/${listing.images[0]}`} 
                     alt={listing.title}
-                    className="listing-image"
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                    }}
                   />
                 ) : (
-                  <div className="no-image">No image</div>
+                  <img 
+                    src="https://via.placeholder.com/300x200?text=No+Image" 
+                    alt="No image available" 
+                  />
                 )}
               </div>
               

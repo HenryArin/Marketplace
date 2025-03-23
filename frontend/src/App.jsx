@@ -6,7 +6,9 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Sign Up
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Array of image paths
   const slideshowImages = [
@@ -29,6 +31,32 @@ function App() {
 
     return () => clearInterval(slideInterval);
   }, [slideshowImages.length]);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('emailaddress', email);
+      formData.append('password', password);
+      formData.append('loginAccount', true);
+
+      const response = await fetch('http://localhost:8000/login.php', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const text = await response.text();
+      if (text.includes('Login Successful')) {
+        alert('Login successful!');
+        // Add any additional logic after successful login
+      } else {
+        alert('Login failed. Please check your credentials.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Error during login. Please try again.');
+    }
+  };
 
   const listings = [
     { id: 1, name: "Vintage Chair", price: "$150", image: "Chair" },
@@ -66,11 +94,24 @@ function App() {
       <div className="CreateAccount">
         <img src="./Images/Icon.png" className="Account-Icon" alt="Account Icon" />
 
-      <h1 id="Create-An-Account">Create an Account</h1>
-      <input  id="Username" placeholder="Username"></input>
-      <input  id="Password" placeholder="Password"></input>
-      <button className="Button-Account">Log in</button>
-      
+        <h1 id="Create-An-Account">{isLogin ? 'Login' : 'Create an Account'}</h1>
+        <input
+          id="Username"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          id="Password"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="Button-Account" onClick={handleLogin}>
+          {isLogin ? 'Log in' : 'Sign up'}
+        </button>
 
         <p className="toggle-text" id="Toggle-text" onClick={() => setIsLogin(!isLogin)}>
           {isLogin ? "Don't have an account? Create one" : "Already have an account? Log in"}
@@ -82,7 +123,6 @@ function App() {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        
       >
         <div name="Top-Line" id="Top-Line"></div>  
         <div name="Hero" id="Hero">

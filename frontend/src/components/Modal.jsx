@@ -96,9 +96,9 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout }) => {
         
         {currentView === 'main' && loggedIn && (
           <div className="navigation-buttons">
-            <button onClick={() => setCurrentView('messages')}>My Listings</button>
-            <button onClick={() => setCurrentView('myListings')}>Create Listings</button>
-            <button onClick={() => setCurrentView('createListing')}>Messages</button>
+            <button onClick={() => setCurrentView('myListings')}>My Listings</button>
+            <button onClick={() => setCurrentView('createListing')}>Create Listings</button>
+            <button onClick={() => setCurrentView('messages')}>Messages</button>
           </div>
         )}
 

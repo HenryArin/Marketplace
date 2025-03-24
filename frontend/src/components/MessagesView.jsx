@@ -127,6 +127,48 @@ const MessagesView = ({ initialConversationId }) => {
     }
   };
   
+  const deleteConversation = async (conversationId) => {
+    if (!window.confirm('Are you sure you want to delete this conversation? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const userID = localStorage.getItem('userID');
+      
+      const response = await fetch('http://localhost:8000/delete_conversation.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          conversation_id: conversationId,
+          user_id: userID
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete conversation');
+      }
+      
+      const data = await response.json();
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      // Remove the deleted conversation from the list
+      setConversations(conversations.filter(c => c.conversationID !== conversationId));
+      
+      // Clear selected conversation if it was deleted
+      if (selectedConversation?.conversationID === conversationId) {
+        setSelectedConversation(null);
+      }
+    } catch (err) {
+      console.error('Error deleting conversation:', err);
+      alert('Failed to delete conversation. Please try again.');
+    }
+  };
+  
   // Format timestamp to readable format
   const formatTime = (timestamp) => {
     if (!timestamp) return '';
@@ -184,16 +226,29 @@ const MessagesView = ({ initialConversationId }) => {
             <div 
               key={conversation.conversationID} 
               className={`message-item ${selectedConversation?.conversationID === conversation.conversationID ? 'active' : ''}`}
-              onClick={() => handleSelectConversation(conversation)}
             >
-              <div className="message-avatar">
-                {conversation.otherUserName ? conversation.otherUserName.charAt(0).toUpperCase() : '?'}
+              <div 
+                className="message-item-content"
+                onClick={() => handleSelectConversation(conversation)}
+              >
+                <div className="message-avatar">
+                  {conversation.otherUserName ? conversation.otherUserName.charAt(0).toUpperCase() : '?'}
+                </div>
+                <div className="message-content">
+                  <div className="message-sender">{conversation.otherUserName || 'User'}</div>
+                  <div className="message-preview">{conversation.lastMessage || 'Start a conversation...'}</div>
+                </div>
+                <div className="message-time">{formatTime(conversation.lastMessageTime)}</div>
               </div>
-              <div className="message-content">
-                <div className="message-sender">{conversation.otherUserName || 'User'}</div>
-                <div className="message-preview">{conversation.lastMessage || 'Start a conversation...'}</div>
-              </div>
-              <div className="message-time">{formatTime(conversation.lastMessageTime)}</div>
+              <button 
+                className="delete-conversation-button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteConversation(conversation.conversationID);
+                }}
+              >
+                Delete
+              </button>
             </div>
           ))}
         </div>
@@ -202,7 +257,7 @@ const MessagesView = ({ initialConversationId }) => {
           {selectedConversation ? (
             <>
               <div className="message-header">
-                Conversation with {selectedConversation.otherUserName || 'User'}
+                <span>Conversation</span>
               </div>
               <div className="message-chat">
                 {selectedConversation.messages && selectedConversation.messages.length > 0 ? (

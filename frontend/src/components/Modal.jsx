@@ -8,6 +8,7 @@ import UserListingsView from './UserListingsView';
 const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout, mode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentView, setCurrentView] = useState(mode);
+  const [activeConversationId, setActiveConversationId] = useState(null);
   
   if (!isOpen) return null;
 
@@ -22,18 +23,31 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout, mode }) =
     console.log('Searching for:', e.target.value);
   };
 
+  const handleOpenMessages = (conversationId = null) => {
+    setCurrentView('messages');
+    setActiveConversationId(conversationId);
+  };
+
   const renderView = () => {
     switch (currentView) {
       case 'messages':
-        return <MessagesView />;
+        return <MessagesView initialConversationId={activeConversationId} />;
       case 'my-listings':
         return <UserListingsView key={Date.now()} onClose={onClose} />;
       case 'create':
         return <CreateListingView onClose={onClose} />;
       default:
+        // Pass the handleOpenMessages function to children
+        const childrenWithProps = React.Children.map(children, child => {
+          if (React.isValidElement(child)) {
+            return React.cloneElement(child, { onOpenMessages: handleOpenMessages });
+          }
+          return child;
+        });
+        
         return (
           <div className="modal-body">
-            {children}
+            {childrenWithProps}
           </div>
         );
     }
@@ -70,7 +84,7 @@ const Modal = ({ isOpen, onClose, children, title, loggedIn, onLogout, mode }) =
           <div className="navigation-buttons">
             <button onClick={() => setCurrentView('my-listings')}>My Listings</button>
             <button onClick={() => setCurrentView('create')}>Create Listings</button>
-            <button onClick={() => setCurrentView('messages')}>Messages</button>
+            <button onClick={() => handleOpenMessages()}>Messages</button>
           </div>
         )}
 

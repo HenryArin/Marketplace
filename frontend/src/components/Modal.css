@@ -63,7 +63,7 @@
   transform: translateY(-1px);
 }
 
-/* Messages View */
+/* Messages View - Enhanced */
 .messages-container {
   display: flex;
   height: 100%;
@@ -81,10 +81,16 @@
   padding: 15px;
   border-bottom: 1px solid #eee;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .message-item:hover {
   background-color: #f8f9fa;
+}
+
+.message-item.active {
+  background-color: #e9f5ff;
+  border-left: 3px solid #007bff;
 }
 
 .message-avatar {
@@ -97,31 +103,44 @@
   align-items: center;
   justify-content: center;
   margin-right: 10px;
+  font-weight: bold;
 }
 
 .message-content {
   flex: 1;
+  min-width: 0; /* Ensures text truncation works */
 }
 
 .message-sender {
   font-weight: 600;
   margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .message-preview {
   color: #666;
   font-size: 0.9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .message-time {
   color: #999;
   font-size: 0.8em;
+  margin-left: 5px;
+  white-space: nowrap;
 }
 
 .message-detail {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .message-header {
@@ -134,10 +153,129 @@
   flex: 1;
   padding: 15px;
   background-color: #f8f9fa;
+  overflow-y: auto;
+}
+
+.message-bubbles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  position: relative;
+}
+
+.message-bubble.sent {
+  align-self: flex-end;
+  background-color: #007bff;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.message-bubble.received {
+  align-self: flex-start;
+  background-color: #e9ecef;
+  color: #333;
+  border-bottom-left-radius: 4px;
+}
+
+.message-text {
+  margin-bottom: 5px;
+  word-wrap: break-word;
+}
+
+.message-timestamp {
+  font-size: 0.7em;
+  opacity: 0.7;
+  text-align: right;
+}
+
+.message-input-container {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  background-color: white;
+}
+
+.message-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+.message-input:focus {
+  border-color: #007bff;
+}
+
+.send-message-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  margin-left: 10px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.send-message-button:hover {
+  background-color: #0069d9;
+}
+
+.send-message-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.no-messages, .message-placeholder, .loading-messages, .error-messages, .empty-conversations {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #6c757d;
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-conversations p {
+  margin: 5px 0;
+}
+
+/* Send message button for listing detail */
+.send-message-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #666;
+  gap: 8px;
+}
+
+.send-message-btn:hover {
+  background-color: #218838;
+}
+
+.send-message-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 }
 
 /* My Listings View */

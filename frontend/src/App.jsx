@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from './components/Modal';
+import ListingDetailView from './components/ListingDetailView';
 import './App.css';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedListing, setSelectedListing] = useState(null);
   const [loggedIn, setLoggedIn] = useState(() => {
     // Initialize loggedIn state from localStorage
     return localStorage.getItem('loggedIn') === 'true';
@@ -54,7 +56,26 @@ function App() {
         throw new Error('Failed to fetch listings');
       }
       const data = await response.json();
-      setListings(data.listings || []);
+      console.log('Fetched listings data:', data);
+      
+      // Make sure each listing has an images array
+      const processedListings = (data.listings || []).map(listing => {
+        // If images is a string, convert it to an array
+        if (typeof listing.images === 'string') {
+          try {
+            listing.images = JSON.parse(listing.images);
+          } catch (e) {
+            // If parsing fails, create an array with the string
+            listing.images = listing.images ? [listing.images] : [];
+          }
+        } else if (!Array.isArray(listing.images)) {
+          // If images is not an array, create an empty array
+          listing.images = [];
+        }
+        return listing;
+      });
+      
+      setListings(processedListings);
     } catch (error) {
       console.error('Error fetching listings:', error);
     } finally {
@@ -232,6 +253,32 @@ function App() {
 
       <div className="Bottom-Nav"></div>
 
+      {selectedListing && (
+        <div 
+          className="listing-detail-overlay" 
+          onClick={(e) => {
+            console.log('Overlay clicked');
+            setSelectedListing(null);
+          }}
+        >
+          <div 
+            className="listing-detail-container" 
+            onClick={(e) => {
+              console.log('Container clicked');
+              e.stopPropagation();
+            }}
+          >
+            <ListingDetailView 
+              listing={selectedListing}
+              onClose={() => {
+                console.log('Close button clicked');
+                setSelectedListing(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => {
@@ -288,7 +335,14 @@ function App() {
                 <div className="no-listings">No listings found</div>
               ) : (
                 listings.map((listing) => (
-                  <div key={listing.listingID} className="listing-item">
+                  <div 
+                    key={listing.listingID} 
+                    className="listing-item"
+                    onClick={() => {
+                      console.log('Clicked listing:', listing);
+                      setSelectedListing(listing);
+                    }}
+                  >
                     <img 
                       src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
                       alt={listing.title}

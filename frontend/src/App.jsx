@@ -18,6 +18,10 @@ function App() {
     return localStorage.getItem('userEmail') || '';
   });
   const [modalMode, setModalMode] = useState(null);
+  const [listings, setListings] = useState([]);
+  const [sortBy, setSortBy] = useState('newest');
+  const [isLoading, setIsLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   // Array of image paths
   const slideshowImages = [
@@ -40,6 +44,28 @@ function App() {
 
     return () => clearInterval(slideInterval);
   }, [slideshowImages.length]);
+
+  // Function to fetch listings
+  const fetchListings = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:8000/src/get_all_listings.php?sort=${sortBy}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch listings');
+      }
+      const data = await response.json();
+      setListings(data.listings || []);
+    } catch (error) {
+      console.error('Error fetching listings:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Fetch listings when component mounts or sort changes
+  useEffect(() => {
+    fetchListings();
+  }, [sortBy]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -124,14 +150,14 @@ function App() {
     localStorage.removeItem('userEmail');
   };
 
-  const listings = [
-    { id: 1, name: "Vintage Chair", price: "$150", image: "Chair" },
-    { id: 2, name: "Coffee Table", price: "$200", image: "Table" },
-    { id: 3, name: "Desk Lamp", price: "$45", image: "Lamp" },
-    { id: 4, name: "Bookshelf", price: "$180", image: "Shelf" },
-    { id: 5, name: "Plant Stand", price: "$35", image: "Stand" },
-    { id: 6, name: "Art Print", price: "$75", image: "Art" },
-  ];
+  const handleFilterClick = () => {
+    setShowFilters(!showFilters);
+  };
+
+  const handleSortChange = (value) => {
+    setSortBy(value);
+    setShowFilters(false); // Close the dropdown after selection
+  };
 
   return (
     <div className="Nav-Bar">
@@ -218,32 +244,55 @@ function App() {
     <button class="filter-button">SouthWest</button>
     <button class="filter-button">Favorites</button>
     <button class="filter-button">Technology</button>
-    <button class="fliter-button">Filter</button>
+    <button className="filter-button" onClick={handleFilterClick}>Filter</button>
+    {showFilters && (
+      <div className="filter-dropdown">
+        <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
+        <button onClick={() => handleSortChange('oldest')} className="filter-option">Oldest First</button>
+        <button onClick={() => handleSortChange('price_high')} className="filter-option">Price: High to Low</button>
+        <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
+      </div>
+    )}
      </div>
       </div>
 
       <div name="Listings-Container" id="List-Container">
-    <div name="Listings-Grid" id="List-Grid">
-      <div class="listing-item">
-        <img src="./Images/Image11.jpg" class="List-Image" alt="Blender" width="250" height="250" />
+        <div className="sort-controls">
+          <select 
+            value={sortBy} 
+            onChange={(e) => setSortBy(e.target.value)}
+            className="sort-select"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="price_high">Price: High to Low</option>
+            <option value="price_low">Price: Low to High</option>
+          </select>
+        </div>
+        <div name="Listings-Grid" id="List-Grid">
+          {isLoading ? (
+            <div className="loading">Loading listings...</div>
+          ) : listings.length === 0 ? (
+            <div className="no-listings">No listings found</div>
+          ) : (
+            listings.map((listing) => (
+              <div key={listing.listingID} className="listing-item">
+                <img 
+                  src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
+                  alt={listing.title}
+                  className="List-Image"
+                  width="250"
+                  height="250"
+                />
+                <div className="listing-info">
+                  <h3>{listing.title}</h3>
+                  <p className="price">${listing.price}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-      <div class="listing-item">
-        <img src="./Images/Image12.jpg" class="List-Image" alt="Blender" width="250" height="250" />
-      </div>
-      <div class="listing-item">
-        <img src="./Images/Image13.jpg" class="List-Image" alt="Blender" width="250" height="250" />
-      </div>
-      <div class="listing-item">
-        <img src="./Images/Image19.jpg" class="List-Image" alt="Blender" width="250" height="250" />
-      </div>
-      <div class="listing-item">
-        <img src="./Images/Image32.jpg" class="List-Image" alt="Blender" width="250" height="250" />
-      </div>
-      <div class="listing-item">
-        <img src="./Images/Image16.jpg" class="List-Image" alt="Blender" width="250" height="250" />
-      </div>
-    </div>
-    </div>
        
         <div name="Bottom-Line" id="Bottom-Line"></div>
         <div className="modal-body">

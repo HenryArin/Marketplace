@@ -1,0 +1,173 @@
+.listing-detail {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.listing-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.listing-detail-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background-color: #f0f0f0;
+}
+
+.listing-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.listing-images {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.gallery-image {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.gallery-image.selected {
+  border-color: #007bff;
+}
+
+.gallery-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.listing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.price-section h3 {
+  margin: 0;
+  font-size: 28px;
+  color: #007bff;
+}
+
+.condition {
+  background-color: #e9ecef;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+.description-section,
+.details-section,
+.seller-section {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.description-section h3,
+.details-section h3,
+.seller-section h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.description-section p {
+  margin: 0;
+  line-height: 1.6;
+  color: #666;
+}
+
+.details-section ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.details-section li {
+  margin-bottom: 8px;
+  color: #666;
+}
+
+.details-section strong {
+  color: #333;
+  margin-right: 8px;
+}
+
+.seller-section p {
+  margin: 0;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .listing-detail-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .listing-detail {
+    padding: 15px;
+  }
+  
+  .main-image {
+    aspect-ratio: 16/9;
+  }
+} 

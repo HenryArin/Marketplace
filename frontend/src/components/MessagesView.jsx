@@ -207,15 +207,21 @@ const MessagesView = ({ initialConversationId }) => {
               <div className="message-chat">
                 {selectedConversation.messages && selectedConversation.messages.length > 0 ? (
                   <div className="message-bubbles">
-                    {selectedConversation.messages.map((message) => (
-                      <div 
-                        key={message.messageID} 
-                        className={`message-bubble ${message.senderID === localStorage.getItem('userID') ? 'sent' : 'received'}`}
-                      >
-                        <div className="message-text">{message.text}</div>
-                        <div className="message-timestamp">{formatTime(message.timestamp)}</div>
-                      </div>
-                    ))}
+                    {selectedConversation.messages.map((message) => {
+                      const isCurrentUser = message.senderID === parseInt(localStorage.getItem('userID'));
+                      return (
+                        <div 
+                          key={message.messageID} 
+                          className={`message-bubble ${isCurrentUser ? 'sent' : 'received'}`}
+                        >
+                          <div className="message-text">{message.text}</div>
+                          <div className="message-timestamp">
+                            {formatTime(message.timestamp)}
+                            {isCurrentUser ? ' · Sent' : ` · ${message.senderName || 'User'}`}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : (
                   <div className="no-messages">
@@ -226,11 +232,12 @@ const MessagesView = ({ initialConversationId }) => {
               <div className="message-input-container">
                 <input
                   type="text"
-                  placeholder="Type a message..."
+                  placeholder="Message"
                   value={messageText}
                   onChange={(e) => setMessageText(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                   className="message-input"
+                  autoFocus
                 />
                 <button 
                   onClick={sendMessage}

@@ -159,10 +159,20 @@ function App() {
     setShowFilters(false); // Close the dropdown after selection
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    setModalMode('marketplace');
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setModalMode(null);
+  };
+
   return (
     <div className="Nav-Bar">
       <div className="App">
-        <button className="Front-Button" onClick={() => setIsModalOpen(true)}>
+        <button className="Front-Button" onClick={handleOpenModal}>
           Browse
         </button>
         <h1 id="Top-Name">Marketplace</h1>
@@ -231,77 +241,78 @@ function App() {
         mode={modalMode}
         loggedIn={loggedIn}
         onLogout={handleLogout}
+        refreshListings={fetchListings}
       >
-        <div name="Top-Line" id="Top-Line"></div>  
-        <div name="Hero" id="Hero">
-          <h1>Discover, Buy, and Sell—Your Marketplace for Everything You Need</h1>
+        <div className="modal-content-container">
+          <div name="Top-Line" id="Top-Line"></div>  
+          <div name="Hero" id="Hero">
+            <h1>Discover, Buy, and Sell—Your Marketplace for Everything You Need</h1>
+          </div>
+          <div name="Button-Container" id="Button-Container">
+            <div name="Button-Rows" id="Button-Rows">
+               <div class="search-container">
+                 <input type="text" class="search-input" placeholder="...Search" />
         </div>
-        <div name="Button-Container" id="Button-Container">
-          <div name="Button-Rows" id="Button-Rows">
-             <div class="search-container">
-               <input type="text" class="search-input" placeholder="...Search" />
-    </div>
-    <button class="filter-button">SouthWest</button>
-    <button class="filter-button">Favorites</button>
-    <button class="filter-button">Technology</button>
-    <button className="filter-button" onClick={handleFilterClick}>Filter</button>
-    {showFilters && (
-      <div className="filter-dropdown">
-        <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
-        <button onClick={() => handleSortChange('oldest')} className="filter-option">Oldest First</button>
-        <button onClick={() => handleSortChange('price_high')} className="filter-option">Price: High to Low</button>
-        <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
-      </div>
-    )}
-     </div>
-      </div>
+        <button class="filter-button">SouthWest</button>
+        <button class="filter-button">Favorites</button>
+        <button class="filter-button">Technology</button>
+        <button className="filter-button" onClick={handleFilterClick}>Filter</button>
+        {showFilters && (
+          <div className="filter-dropdown">
+            <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
+            <button onClick={() => handleSortChange('oldest')} className="filter-option">Oldest First</button>
+            <button onClick={() => handleSortChange('price_high')} className="filter-option">Price: High to Low</button>
+            <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
+          </div>
+        )}
+         </div>
+          </div>
 
-      <div name="Listings-Container" id="List-Container">
-        <div className="sort-controls">
-          <select 
-            value={sortBy} 
-            onChange={(e) => setSortBy(e.target.value)}
-            className="sort-select"
-          >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
-            <option value="price_high">Price: High to Low</option>
-            <option value="price_low">Price: Low to High</option>
-          </select>
-        </div>
-        <div name="Listings-Grid" id="List-Grid">
-          {isLoading ? (
-            <div className="loading">Loading listings...</div>
-          ) : listings.length === 0 ? (
-            <div className="no-listings">No listings found</div>
-          ) : (
-            listings.map((listing) => (
-              <div key={listing.listingID} className="listing-item">
-                <img 
-                  src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
-                  alt={listing.title}
-                  className="List-Image"
-                  width="250"
-                  height="250"
-                  onError={(e) => {
-                    e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
-                  }}
-                />
-                <div className="listing-info">
-                  <h3>{listing.title}</h3>
-                  <p className="price">${listing.price}</p>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-       
-        <div name="Bottom-Line" id="Bottom-Line"></div>
-        <div className="modal-body">
-        <div className="map-container">Map</div>
-          
-       
+          <div name="Listings-Container" id="List-Container">
+            <div className="sort-controls">
+              <select 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value)}
+                className="sort-select"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="price_high">Price: High to Low</option>
+                <option value="price_low">Price: Low to High</option>
+              </select>
+            </div>
+            <div name="Listings-Grid" id="List-Grid">
+              {isLoading ? (
+                <div className="loading">Loading listings...</div>
+              ) : listings.length === 0 ? (
+                <div className="no-listings">No listings found</div>
+              ) : (
+                listings.map((listing) => (
+                  <div key={listing.listingID} className="listing-item">
+                    <img 
+                      src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
+                      alt={listing.title}
+                      className="List-Image"
+                      width="250"
+                      height="250"
+                      onError={(e) => {
+                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                      }}
+                    />
+                    <div className="listing-info">
+                      <h3>{listing.title}</h3>
+                      <p className="price">${listing.price}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+           
+          <div name="Bottom-Line" id="Bottom-Line"></div>
+          <div className="modal-body">
+            <div className="map-container">Map</div>
+          </div>
         </div>
       </Modal>
     </div>

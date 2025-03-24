@@ -16,11 +16,24 @@ const CreateListingView = ({ onClose }) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setFormData(prev => ({ ...prev, images: files }));
     
-    // Create preview URLs
-    const previews = files.map(file => URL.createObjectURL(file));
-    setPreviewImages(previews);
+    // Check if adding new files would exceed the limit
+    if (formData.images.length + files.length > 3) {
+      setError('Maximum 3 images allowed');
+      setTimeout(() => setError(''), 3000);
+      return;
+    }
+    
+    // Add new files to existing ones
+    const newFiles = [...formData.images, ...files].slice(0, 3);
+    setFormData(prev => ({ ...prev, images: newFiles }));
+    
+    // Create preview URLs for all images
+    const newPreviews = newFiles.map(file => URL.createObjectURL(file));
+    
+    // Clean up old preview URLs to prevent memory leaks
+    previewImages.forEach(url => URL.revokeObjectURL(url));
+    setPreviewImages(newPreviews);
   };
 
   const handleSubmit = async (e) => {
@@ -121,7 +134,7 @@ const CreateListingView = ({ onClose }) => {
         </div>
 
         <div className="form-group">
-          <label>Images</label>
+          <label>Images (Max 3)</label>
           <div className="image-upload-container">
             <input
               type="file"
@@ -132,8 +145,8 @@ const CreateListingView = ({ onClose }) => {
               id="image-upload"
               style={{ display: 'none' }}
             />
-            <label htmlFor="image-upload" className="upload-button">
-              Upload Images
+            <label htmlFor="image-upload" className={`upload-button ${formData.images.length >= 3 ? 'disabled' : ''}`}>
+              Upload Images ({formData.images.length}/3)
             </label>
             <div className="upload-preview">
               {previewImages.length > 0 ? (
@@ -147,6 +160,9 @@ const CreateListingView = ({ onClose }) => {
                           const newFiles = [...formData.images];
                           newFiles.splice(index, 1);
                           setFormData(prev => ({ ...prev, images: newFiles }));
+                          
+                          // Clean up the removed preview URL
+                          URL.revokeObjectURL(previewImages[index]);
                           const newPreviews = [...previewImages];
                           newPreviews.splice(index, 1);
                           setPreviewImages(newPreviews);
@@ -157,9 +173,21 @@ const CreateListingView = ({ onClose }) => {
                       </button>
                     </div>
                   ))}
+                  {/* Add empty slots for remaining images */}
+                  {[...Array(3 - previewImages.length)].map((_, index) => (
+                    <div key={`empty-${index}`} className="preview-item empty">
+                      <div className="empty-slot">+</div>
+                    </div>
+                  ))}
                 </div>
               ) : (
-                'No images uploaded yet'
+                <div className="preview-grid">
+                  {[...Array(3)].map((_, index) => (
+                    <div key={`empty-${index}`} className="preview-item empty">
+                      <div className="empty-slot">+</div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>

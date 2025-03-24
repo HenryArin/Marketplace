@@ -171,7 +171,17 @@ try {
         
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
             if ($_FILES['images']['error'][$key] !== UPLOAD_ERR_OK) {
-                error_log("File upload error: " . $_FILES['images']['error'][$key]);
+                $errorMessage = match($_FILES['images']['error'][$key]) {
+                    UPLOAD_ERR_INI_SIZE => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+                    UPLOAD_ERR_FORM_SIZE => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+                    UPLOAD_ERR_PARTIAL => 'The uploaded file was only partially uploaded',
+                    UPLOAD_ERR_NO_FILE => 'No file was uploaded',
+                    UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder',
+                    UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk',
+                    UPLOAD_ERR_EXTENSION => 'A PHP extension stopped the file upload',
+                    default => 'Unknown upload error'
+                };
+                error_log("File upload error: " . $errorMessage);
                 continue;
             }
             
@@ -208,6 +218,8 @@ try {
                 
                 $uploadedImages[] = $newFileName;
                 error_log("Successfully saved image: " . $newFileName);
+            } else {
+                error_log("Failed to move uploaded file. Error: " . error_get_last()['message']);
             }
         }
     }
@@ -215,6 +227,7 @@ try {
     error_log("Successfully created listing with " . count($uploadedImages) . " images");
     sendJsonResponse([
         'success' => true,
+        'message' => 'Listing created successfully! Your item is now available in the marketplace.',
         'listingID' => $listingID,
         'images' => $uploadedImages
     ]);
@@ -222,7 +235,10 @@ try {
 } catch (Exception $e) {
     error_log('Create listing error: ' . $e->getMessage());
     error_log('Stack trace: ' . $e->getTraceAsString());
-    sendJsonResponse(['error' => $e->getMessage()], 500);
+    sendJsonResponse([
+        'success' => false,
+        'error' => 'Failed to create listing: ' . $e->getMessage()
+    ], 500);
 } finally {
     if (isset($db)) {
         $db->close();

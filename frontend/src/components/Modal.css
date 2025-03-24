@@ -458,6 +458,11 @@
   border-bottom: 2px solid #e9ecef;
 }
 
+/* Specific header for the edit form */
+.modal-body.create-listing-view .create-listing-form::before {
+  content: 'Edit Listing';
+}
+
 /* Main View Layout */
 .modal-body {
   display: flex;
@@ -853,5 +858,106 @@
   padding: 20px;
   color: #666;
   font-style: italic;
+}
+
+/* Edit Listing Form */
+.edit-listing-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.edit-listing-form h2 {
+  margin-bottom: 30px;
+  color: #333;
+  text-align: center;
+}
+
+.edit-listing-form .form-group {
+  margin-bottom: 20px;
+}
+
+.edit-listing-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+}
+
+.edit-listing-form input[type="text"],
+.edit-listing-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2c3e50;
+  transition: border-color 0.2s ease;
+}
+
+.edit-listing-form input[type="text"]:focus,
+.edit-listing-form textarea:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.edit-listing-form .form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.edit-listing-form .save-button,
+.edit-listing-form .cancel-button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-listing-form .save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.edit-listing-form .save-button:hover {
+  background-color: #218838;
+}
+
+.edit-listing-form .cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.edit-listing-form .cancel-button:hover {
+  background-color: #5a6268;
+}
+
+/* Cancel button for edit form */
+.create-listing-form .cancel-button {
+  width: 100%;
+  padding: 14px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 20px;
+}
+
+.create-listing-form .cancel-button:hover {
+  background-color: #5a6268;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
 }
 

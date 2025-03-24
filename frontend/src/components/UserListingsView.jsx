@@ -5,6 +5,12 @@ const UserListingsView = ({ onClose }) => {
   const [listings, setListings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editingListing, setEditingListing] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    title: '',
+    price: '',
+    description: ''
+  });
 
   // Function to fetch user listings
   const fetchUserListings = async () => {
@@ -96,14 +102,118 @@ const UserListingsView = ({ onClose }) => {
   };
 
   const handleEditListing = (listing) => {
-    // TODO: Implement edit functionality
-    console.log('Edit listing:', listing);
+    setEditingListing(listing);
+    setEditFormData({
+      title: listing.title,
+      price: listing.price,
+      description: listing.description
+    });
+  };
+
+  const handleSaveEdit = async (e) => {
+    e.preventDefault(); // Prevent form submission
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError('You must be logged in to edit a listing');
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await fetch(`http://localhost:8000/src/edit_listing.php?id=${editingListing.listingID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(editFormData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to edit listing');
+      }
+
+      // Update the listing in the state
+      setListings(listings.map(listing => 
+        listing.listingID === editingListing.listingID 
+          ? { ...listing, ...editFormData }
+          : listing
+      ));
+
+      // Clear editing state
+      setEditingListing(null);
+      setEditFormData({
+        title: '',
+        price: '',
+        description: ''
+      });
+    } catch (err) {
+      console.error('Error editing listing:', err);
+      setError(err.message || 'Failed to edit listing');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCancelEdit = (e) => {
+    e.preventDefault(); // Prevent default action
+    setEditingListing(null);
+    setEditFormData({
+      title: '',
+      price: '',
+      description: ''
+    });
   };
 
   if (isLoading) {
     return (
       <div className="modal-body">
         <div className="loading">Loading your listings...</div>
+      </div>
+    );
+  }
+
+  // If we're editing a listing, show the edit form
+  if (editingListing) {
+    return (
+      <div className="modal-body create-listing-view">
+        <form className="create-listing-form" onSubmit={handleSaveEdit}>
+          <h2>Edit Listing</h2>
+          <div className="form-group">
+            <label>Title</label>
+            <textarea
+              value={editFormData.title}
+              onChange={(e) => setEditFormData({...editFormData, title: e.target.value})}
+              placeholder="Enter item title"
+              rows="1"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Price</label>
+            <textarea
+              value={editFormData.price}
+              onChange={(e) => setEditFormData({...editFormData, price: e.target.value})}
+              placeholder="Enter price"
+              rows="1"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              value={editFormData.description}
+              onChange={(e) => setEditFormData({...editFormData, description: e.target.value})}
+              placeholder="Enter item description"
+              rows="4"
+              required
+            />
+          </div>
+          <button type="submit" className="submit-button">Save Changes</button>
+          <button type="button" onClick={handleCancelEdit} className="cancel-button">Cancel</button>
+        </form>
       </div>
     );
   }

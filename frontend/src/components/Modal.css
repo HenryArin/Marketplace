@@ -232,7 +232,7 @@
 
 .message-input {
   flex: 0 1 auto;
-  width: 50%;
+  width: 45%;
   margin-right: 10px;
   padding: 12px 15px;
   border: 1px solid #d1d1d1;
@@ -244,8 +244,8 @@
   height: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   order: 1;
-  top: 685px;
-  right: 290px;
+  top: 625px;
+  right: 180px;
 }
 
 .message-input:focus {

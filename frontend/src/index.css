@@ -28,8 +28,10 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #273b31;
+  background-color: #2d2d2d;
 }
+
+
 
 h1 {
   font-size: 3.2em;
@@ -41,7 +43,7 @@ h1 {
   position: fixed;
   top: 35px;
   font-size: 35px;
-  right: 44%;
+  right: 495px;
 }
 
 #Top-Search, input{
@@ -55,15 +57,7 @@ h1 {
 }
 
 
-.CreateAccount{
-  background-color: transparent;
-  position: fixed;
-  top: 150px;
-  right: 100px;
-  border: 2px solid white;
-  height: 400px;
-  width: 400px;
-}
+
 
 .Image{
   position: fixed;
@@ -78,7 +72,7 @@ h1 {
   position: fixed;
   z-index: 1;
   top: 230px;
-  right: 160px;
+  right: 265px;
   color: white;
   font-size: 25px;
 }
@@ -292,7 +286,7 @@ Right Modal CSS
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Changed from 3 to 2 columns */
   gap: 40px; /* Spacing between images */
-  width: 100%;
+  width: 15%;
 }
 
 .listing-item {
@@ -311,8 +305,8 @@ Right Modal CSS
 }
 
 .List-Image {
-  width: 300px; /* Made images slightly larger since we have more space */
-  height: 300px;
+  width: 95px; /* Made images slightly larger since we have more space */
+  height: 95px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -488,6 +482,86 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+/* Footer styling to match the Crumbs login page */
+.app-footer {
+  background-color: #000;
+  color: #fff;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 600px;
+  left: -25px;
+  width: 100%;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.language label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.language select {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.footer-links li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer-links li a:hover {
+  text-decoration: underline;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.payment-icons img {
+  height: 20px;
+}
+
+.footer-branding p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.demo-note {
+  text-align: center;
+  font-size: 12px;
+  color: #888;
+  margin-top: 10px;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: light) {

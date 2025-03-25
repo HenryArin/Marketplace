@@ -24,28 +24,33 @@ function App() {
   const [sortBy, setSortBy] = useState('newest');
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [showSouthWest, setShowSouthWest] = useState(false);
+  const [showFavorites, setShowFavorites] = useState(false);
+  const [showTechnology, setShowTechnology] = useState(false);
 
-  // Array of image paths
-  const slideshowImages = [
-    '/Images/Image35.jpg',
-    '/Images/Image33.jpg',
-    '/Images/Image34.jpg',
-  ];
 
-  // Automatic sliding every 10 seconds with fade
-  useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setIsFading(true);
-      setTimeout(() => {
-        setCurrentImageIndex((prevIndex) =>
-          (prevIndex + 1) % slideshowImages.length
-        );
-        setIsFading(false);
-      }, 500);
-    }, 10000);
+  const handleSouthWestClick = () => {
+    setShowSouthWest(!showSouthWest);
+    setShowFavorites(false);
+    setShowTechnology(false);
+    setShowFilters(false);
+  };
+  
+  const handleFavoritesClick = () => {
+    setShowFavorites(!showFavorites);
+    setShowSouthWest(false);
+    setShowTechnology(false);
+    setShowFilters(false);
+  };
+  
+  const handleTechnologyClick = () => {
+    setShowTechnology(!showTechnology);
+    setShowSouthWest(false);
+    setShowFavorites(false);
+    setShowFilters(false);
+  };
 
-    return () => clearInterval(slideInterval);
-  }, [slideshowImages.length]);
+
 
   // Function to fetch listings
   const fetchListings = async () => {
@@ -196,22 +201,11 @@ function App() {
         <button className="Front-Button" onClick={handleOpenModal}>
           Browse
         </button>
-        <h1 id="Top-Name">Marketplace</h1>
+        <h1 id="Top-Name">Henry & Oscar's Marketplace</h1>
         <input id="Top-Search" placeholder="...Search" />
       </div>
 
-      {/* Slideshow */}
-      <div className="slideshow-container">
-        <img
-          src={slideshowImages[currentImageIndex]}
-          alt={`Slide ${currentImageIndex + 1}`}
-          className={`pre-footer-image ${isFading ? 'fade-out' : 'fade-in'}`}
-          onError={(e) => {
-            e.target.src = '/Images/fallback.jpg';
-            console.error(`Failed to load ${slideshowImages[currentImageIndex]}`);
-          }}
-        />
-      </div>
+
 
       {/* Create Account / Login Section */}
       {!loggedIn ? (
@@ -251,7 +245,36 @@ function App() {
         </div>
       )}
 
-      <div className="Bottom-Nav"></div>
+
+<footer className="app-footer">
+  <div className="footer-left">
+    <div className="language">
+      <label>LANGUAGE</label>
+      <select>
+        <option>English</option>
+      </select>
+    </div>
+    <ul className="footer-links">
+      <li><a href="#">Search</a></li>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Cookie Policy</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+  <div className="footer-right">
+    <div className="payment-icons">
+      <img src="/Images/visa.png" alt="Visa" />
+      <img src="/Images/mastercard.png" alt="Mastercard" />
+      <img src="/Images/amex.png" alt="Amex" />
+      <img src="/Images/paypal.png" alt="Paypal" />
+      <img src="/Images/discover.png" alt="Discover" />
+    </div>
+    <div className="footer-branding">
+      <p>© Marketplace</p>
+      <p>Powered by Henry & Oscar</p>
+    </div>
+  </div>
+</footer>
 
       {selectedListing && (
         <div 
@@ -300,10 +323,11 @@ function App() {
                <div class="search-container">
                  <input type="text" class="search-input" placeholder="...Search" />
         </div>
-        <button class="filter-button">SouthWest</button>
-        <button class="filter-button">Favorites</button>
-        <button class="filter-button">Technology</button>
+        <button class="filter-button" onClick={handleFilterClick}>SouthWest</button>
+        <button class="filter-button" onClick={handleFavoritesClick}>Favorites</button>
+        <button class="filter-button"  onClick={handleTechnologyClick}>Technology</button>
         <button className="filter-button" onClick={handleFilterClick}>Filter</button>
+
         {showFilters && (
           <div className="filter-dropdown">
             <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
@@ -312,6 +336,32 @@ function App() {
             <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
           </div>
         )}
+
+{showSouthWest && (
+  <div className="filter-dropdown">
+    <button onClick={() => handleSortChange('southwest_option1')} className="filter-option">SouthEast</button>
+    <button onClick={() => handleSortChange('southwest_option2')} className="filter-option">SouthWest</button>
+    <button onClick={() => handleSortChange('southwest_option1')} className="filter-option">NorthWest</button>
+    <button onClick={() => handleSortChange('southwest_option2')} className="filter-option">NorthEast</button>
+  </div>
+)}
+
+{showFavorites && (
+  <div className="filter-dropdown">
+    <button onClick={() => handleSortChange('favorites_option1')} className="filter-option"></button>
+    <button onClick={() => handleSortChange('favorites_option2')} className="filter-option"></button>
+  </div>
+)}
+
+{showTechnology && (
+  <div className="filter-dropdown">
+    <button onClick={() => handleSortChange('tech_option1')} className="filter-option">Technology</button>
+    <button onClick={() => handleSortChange('tech_option2')} className="filter-option">Hobbies</button>
+    <button onClick={() => handleSortChange('tech_option1')} className="filter-option">Furniture</button>
+    <button onClick={() => handleSortChange('tech_option2')} className="filter-option">Video Games</button>
+  </div>
+)}
+               
          </div>
           </div>
 

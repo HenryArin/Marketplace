@@ -554,3 +554,132 @@
 [24-Mar-2025 06:54:45 UTC] Found 0 listings for user
 [24-Mar-2025 06:54:45 UTC] Authenticated user ID: 6
 [24-Mar-2025 06:54:45 UTC] Found 0 listings for user
+[25-Mar-2025 18:04:48 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:04:48 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:05:34 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\signup.php(32): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:06:02 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\login.php(37): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:06:14 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\signup.php(32): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:22:26 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:22:26 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:22:36 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\login.php(37): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:34:25 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:34:25 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\get_all_listings.php(30): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 18:34:33 UTC] PHP Fatal error:  Uncaught Error: Class "SQLite3" not found in C:\projects\Project2\Project2\marketplace\src\config.php:4
+Stack trace:
+#0 C:\projects\Project2\Project2\marketplace\src\login.php(37): require_once()
+#1 {main}
+  thrown in C:\projects\Project2\Project2\marketplace\src\config.php on line 4
+[25-Mar-2025 21:16:33 UTC] Received POST request
+[25-Mar-2025 21:16:33 UTC] POST data: Array
+(
+    [title] => Skateboard
+    [price] => 15
+    [description] => Used but Worn
+)
+
+[25-Mar-2025 21:16:33 UTC] FILES data: Array
+(
+    [images] => Array
+        (
+            [name] => Array
+                (
+                    [0] => Image12.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => Image12.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\Users\oscar\AppData\Local\Temp\php73D6.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 139289
+                )
+
+        )
+
+)
+
+[25-Mar-2025 21:16:33 UTC] Database file exists at: C:\projects\Project2\Project2\marketplace/sql/marketplace.db
+[25-Mar-2025 21:16:33 UTC] Using listerID: 7
+[25-Mar-2025 21:16:33 UTC] Form data received - Title: Skateboard, Price: 15, Description: Used but Worn...
+[25-Mar-2025 21:16:33 UTC] Preparing SQL: INSERT INTO listing (listerID, title, description, price, sold) VALUES (:listerID, :title, :description, :price, 0)
+[25-Mar-2025 21:16:33 UTC] Created listing with ID: 7
+[25-Mar-2025 21:16:33 UTC] Moving uploaded file to: ../img/listings/67e31d313f68c.jpg
+[25-Mar-2025 21:16:33 UTC] Successfully saved image: 67e31d313f68c.jpg
+[25-Mar-2025 21:16:33 UTC] Successfully created listing with 1 images
+[25-Mar-2025 21:16:44 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:44 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:44 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:44 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:48 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:48 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:48 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:48 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:49 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:49 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:49 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:49 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:58 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:58 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:58 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:58 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:58 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:58 UTC] Found 1 listings for user
+[25-Mar-2025 21:16:59 UTC] Authenticated user ID: 7
+[25-Mar-2025 21:16:59 UTC] Found 1 listings for user

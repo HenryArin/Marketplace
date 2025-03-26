@@ -51,7 +51,7 @@
 .navigation-buttons button {
   min-width: 120px;
   padding: 10px 20px;
-  background-color: #007bff00;
+  background-color: #ffffff;
   color: rgb(0, 0, 0);
   border: none;
   border-radius: 4px;
@@ -61,7 +61,7 @@
 }
 
 .navigation-buttons button:hover {
-  background-color: #93b7dd;
+  background-color: #f0f0f0;
   transform: translateY(-1px);
 }
 

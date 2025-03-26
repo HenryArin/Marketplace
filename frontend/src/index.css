@@ -305,7 +305,7 @@ Right Modal CSS
 #List-Grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Changed from 2 to 3 columns */
-  gap: 40px; /* Spacing between images */
+  gap: 60px; /* Increased from 40px to 60px for more spacing */
   width: 15%;
 }
 

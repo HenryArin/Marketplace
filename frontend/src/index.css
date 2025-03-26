@@ -304,7 +304,7 @@ Right Modal CSS
 
 #List-Grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Changed from 3 to 2 columns */
+  grid-template-columns: repeat(3, 1fr); /* Changed from 2 to 3 columns */
   gap: 40px; /* Spacing between images */
   width: 15%;
 }
@@ -318,6 +318,7 @@ Right Modal CSS
   padding: 15px;
   transition: transform 0.2s;
   margin: 0 auto; /* Center items in their grid cells */
+  width: 100%; /* Ensure items take full width of their grid cell */
 }
 
 .listing-item:hover {

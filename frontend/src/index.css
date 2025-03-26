@@ -22,13 +22,18 @@ a:hover {
   color: #535bf2;
 }
 
+.Front-Button:hover{
+  background-color: #fca311;
+  outline: none;
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #2d2d2d;
+  background-color: #14213d;
 }
 
 
@@ -56,7 +61,22 @@ h1 {
     padding: 10px 20px 10px 20px;
 }
 
+/* App.css */
+.CreateAccount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Center vertically in the viewport */
+  text-align: center;
+}
 
+.CreateAccount h1 {
+  margin: 0; /* Remove default margin */
+  position: relative; /* Ensure consistent positioning */
+  top: 0; /* Align to the same vertical position */
+  color: inherit; /* Keep the color consistent */
+}
 
 
 .Image{
@@ -160,12 +180,12 @@ Right Modal CSS
   position: fixed;
   top: 20%;
   left: 25px;
-  background-color: black;
+  background-color: rgb(255, 255, 255);
 
 }
 
 #Hero > h1 {
-  color: black;
+  color: white;
   Font-size: 25px;
   width: 400px;
   font-weight: 100;
@@ -403,7 +423,7 @@ Right Modal CSS
   position: fixed;
   top: 50%;
   left: 0;
-  background-color: black;
+  background-color: white;
 }
 
 
@@ -414,13 +434,18 @@ Right Modal CSS
 
 
 .Button-Account{
-  color: white;
+  color: rgb(0, 0, 0);
   z-index: 1;
   position: fixed;
   top: 450px;
   padding: 15px 45px 15px 45px;
-  background-color:#456957;
+  background-color:#ffffff;
   right: 235px;
+}
+
+.Button-Account:hover{
+  background-color: #fca311;
+  outline: none;
 }
 
 
@@ -487,16 +512,17 @@ button:focus-visible {
 
 /* Footer styling to match the Crumbs login page */
 .app-footer {
-  background-color: #000;
-  color: #fff;
+  background-color: #e5e5e5;
+  color: #000000;
   padding: 20px 50px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  gap: 550px;
   align-items: center;
   font-size: 14px;
   flex-wrap: wrap;
   position: fixed;
-  top: 600px;
+  top: 615px;
   left: -25px;
   width: 100%;
 }
@@ -513,8 +539,8 @@ button:focus-visible {
 }
 
 .language select {
-  background-color: #333;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
   border: none;
   padding: 5px;
   font-size: 14px;
@@ -527,7 +553,7 @@ button:focus-visible {
 }
 
 .footer-links li a {
-  color: #fff;
+  color: #000000;
   text-decoration: none;
 }
 
@@ -559,7 +585,7 @@ button:focus-visible {
 .demo-note {
   text-align: center;
   font-size: 12px;
-  color: #888;
+  color: #000000;
   margin-top: 10px;
   width: 100%;
 }

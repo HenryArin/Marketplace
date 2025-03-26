@@ -202,7 +202,7 @@ function App() {
           Browse
         </button>
         <h1 id="Top-Name">Henry & Oscar's Marketplace</h1>
-        <input id="Top-Search" placeholder="...Search" />
+        <img src="./Images/Kitty2.png" id="Top-Search" width="75px" height="75px"/>
       </div>
 
 

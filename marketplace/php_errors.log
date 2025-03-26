@@ -683,3 +683,61 @@ Stack trace:
 [25-Mar-2025 21:16:58 UTC] Found 1 listings for user
 [25-Mar-2025 21:16:59 UTC] Authenticated user ID: 7
 [25-Mar-2025 21:16:59 UTC] Found 1 listings for user
+[26-Mar-2025 02:11:26 UTC] Received POST request
+[26-Mar-2025 02:11:26 UTC] POST data: Array
+(
+    [title] => Pokemon
+    [price] => 25
+    [description] => Video Games
+)
+
+[26-Mar-2025 02:11:26 UTC] FILES data: Array
+(
+    [images] => Array
+        (
+            [name] => Array
+                (
+                    [0] => Image13.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => Image13.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\Users\oscar\AppData\Local\Temp\php6FFD.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 147164
+                )
+
+        )
+
+)
+
+[26-Mar-2025 02:11:26 UTC] Database file exists at: C:\projects\Project2\Project2\marketplace/sql/marketplace.db
+[26-Mar-2025 02:11:26 UTC] Using listerID: 8
+[26-Mar-2025 02:11:26 UTC] Form data received - Title: Pokemon, Price: 25, Description: Video Games...
+[26-Mar-2025 02:11:26 UTC] Preparing SQL: INSERT INTO listing (listerID, title, description, price, sold) VALUES (:listerID, :title, :description, :price, 0)
+[26-Mar-2025 02:11:26 UTC] Created listing with ID: 8
+[26-Mar-2025 02:11:26 UTC] Moving uploaded file to: ../img/listings/67e3624ef3482.jpg
+[26-Mar-2025 02:11:27 UTC] Successfully saved image: 67e3624ef3482.jpg
+[26-Mar-2025 02:11:27 UTC] Successfully created listing with 1 images
+[26-Mar-2025 02:11:37 UTC] Authenticated user ID: 8
+[26-Mar-2025 02:11:37 UTC] Found 1 listings for user
+[26-Mar-2025 02:11:37 UTC] Authenticated user ID: 8
+[26-Mar-2025 02:11:37 UTC] Found 1 listings for user

@@ -124,8 +124,9 @@ try {
     $title = $_POST['title'] ?? '';
     $price = $_POST['price'] ?? '';
     $description = $_POST['description'] ?? '';
+    $category = $_POST['category'] ?? 'other';
     
-    error_log("Form data received - Title: $title, Price: $price, Description: " . substr($description, 0, 50) . "...");
+    error_log("Form data received - Title: $title, Price: $price, Category: $category, Description: " . substr($description, 0, 50) . "...");
     
     // Validate required fields
     if (empty($title) || empty($price) || empty($description)) {
@@ -133,8 +134,44 @@ try {
         sendJsonResponse(['error' => 'All fields are required'], 400);
     }
     
+    // Add the sold column if it doesn't exist
+    $db->exec('PRAGMA table_info(listing)');
+    $columns = $db->query('PRAGMA table_info(listing)');
+    $hasSoldColumn = false;
+    $hasCategoryColumn = false;
+    while ($column = $columns->fetchArray()) {
+        if ($column['name'] === 'sold') {
+            $hasSoldColumn = true;
+        }
+        if ($column['name'] === 'category') {
+            $hasCategoryColumn = true;
+        }
+    }
+    if (!$hasSoldColumn) {
+        error_log("Adding sold column to listing table");
+        $db->exec('ALTER TABLE listing ADD COLUMN sold INTEGER DEFAULT 0');
+    }
+    if (!$hasCategoryColumn) {
+        error_log("Adding category column to listing table");
+        $db->exec('ALTER TABLE listing ADD COLUMN category TEXT DEFAULT "other"');
+    }
+    
+    // Check if created_at column exists, add if not
+    $hasCreatedAtColumn = false;
+    $columns = $db->query('PRAGMA table_info(listing)');
+    while ($column = $columns->fetchArray()) {
+        if ($column['name'] === 'created_at') {
+            $hasCreatedAtColumn = true;
+            break;
+        }
+    }
+    if (!$hasCreatedAtColumn) {
+        error_log("Adding created_at column to listing table");
+        $db->exec('ALTER TABLE listing ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP');
+    }
+    
     // Insert the listing
-    $sql = 'INSERT INTO listing (listerID, title, description, price, sold) VALUES (:listerID, :title, :description, :price, 0)';
+    $sql = 'INSERT INTO listing (listerID, title, description, price, category, sold) VALUES (:listerID, :title, :description, :price, :category, 0)';
     error_log("Preparing SQL: " . $sql);
     
     $stmt = $db->prepare($sql);
@@ -147,6 +184,7 @@ try {
     $stmt->bindValue(':title', $title, SQLITE3_TEXT);
     $stmt->bindValue(':description', $description, SQLITE3_TEXT);
     $stmt->bindValue(':price', $price, SQLITE3_TEXT);
+    $stmt->bindValue(':category', $category, SQLITE3_TEXT);
     
     $result = $stmt->execute();
     if (!$result) {

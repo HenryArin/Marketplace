@@ -199,16 +199,19 @@ const ListingDetailView = ({ listing, onClose, onOpenMessages }) => {
             <h3>${listing.price || '0.00'}</h3>
             <p className="condition">{listing.condition || 'Used'}</p>
           </div>
-
-          <div className="description-section">
-            <h3>Description</h3>
-            <p>{listing.description || 'No description provided.'}</p>
+          
+          <div className="category-section">
+            <span className="category-label">Category:</span>
+            <span className="category-value">
+              {(listing.category && listing.category.charAt(0).toUpperCase() + listing.category.slice(1)) || 'Other'}
+            </span>
           </div>
+          
+          <p className="description">{listing.description || 'No description provided.'}</p>
 
           <div className="details-section">
             <h3>Details</h3>
             <ul>
-              <li><strong>Category:</strong> {listing.category || 'General'}</li>
               <li><strong>Location:</strong> {listing.location || 'Not specified'}</li>
               <li><strong>Posted:</strong> {listing.created_at ? new Date(listing.created_at).toLocaleDateString() : 'Recently'}</li>
             </ul>

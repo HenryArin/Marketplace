@@ -1179,3 +1179,59 @@
   background-color: #cc0000;
 }
 
+.category-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 16px;
+  color: #333;
+}
+
+.category-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.category-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 0 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.category-filter-button {
+  padding: 5px 12px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.category-filter-button:hover {
+  background-color: #e0e0e0;
+}
+
+.category-filter-button.active {
+  background-color: #4a90e2;
+  color: white;
+  border-color: #4a90e2;
+}
+
+.filter-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+  margin-right: 8px;
+  align-self: center;
+}
+

@@ -205,4 +205,24 @@
   color: #6c757d;
   text-align: center;
   font-style: italic;
+}
+
+.category-section {
+  margin: 10px 0;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+}
+
+.category-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.category-value {
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #333;
 } 

@@ -6,6 +6,7 @@ const CreateListingView = ({ onClose }) => {
     title: '',
     price: '',
     description: '',
+    category: 'other',
     images: []
   });
   const [previewImages, setPreviewImages] = useState([]);
@@ -54,6 +55,7 @@ const CreateListingView = ({ onClose }) => {
       formDataToSend.append('title', formData.title);
       formDataToSend.append('price', formData.price);
       formDataToSend.append('description', formData.description);
+      formDataToSend.append('category', formData.category);
       
       // Append each image to form data
       formData.images.forEach((image, index) => {
@@ -80,6 +82,7 @@ const CreateListingView = ({ onClose }) => {
         title: '',
         price: '',
         description: '',
+        category: 'other',
         images: []
       });
       setPreviewImages([]);
@@ -120,6 +123,29 @@ const CreateListingView = ({ onClose }) => {
             rows="1"
             required
           />
+        </div>
+
+        <div className="form-group">
+          <label>Category</label>
+          <select 
+            value={formData.category}
+            onChange={(e) => setFormData({...formData, category: e.target.value})}
+            className="category-select"
+            required
+          >
+            <option value="books">Books</option>
+            <option value="clothing">Clothing</option>
+            <option value="collectibles">Collectibles</option>
+            <option value="electronics">Electronics</option>
+            <option value="furniture">Furniture</option>
+            <option value="gaming">Gaming</option>
+            <option value="home">Home & Garden</option>
+            <option value="other">Other</option>
+            <option value="sports">Sports</option>
+            <option value="technology">Technology</option>
+            <option value="toys">Toys</option>
+            <option value="vehicles">Vehicles</option>
+          </select>
         </div>
 
         <div className="form-group">

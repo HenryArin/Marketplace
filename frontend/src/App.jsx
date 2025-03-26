@@ -24,11 +24,39 @@ function App() {
   const [sortBy, setSortBy] = useState('newest');
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-  const [showTechnology, setShowTechnology] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleTechnologyClick = () => {
-    setShowTechnology(!showTechnology);
+  // List of available categories
+  const categories = [
+    { value: 'books', label: 'Books' },
+    { value: 'clothing', label: 'Clothing' },
+    { value: 'collectibles', label: 'Collectibles' },
+    { value: 'electronics', label: 'Electronics' },
+    { value: 'furniture', label: 'Furniture' },
+    { value: 'gaming', label: 'Gaming' },
+    { value: 'home', label: 'Home & Garden' },
+    { value: 'other', label: 'Other' },
+    { value: 'sports', label: 'Sports' },
+    { value: 'technology', label: 'Technology' },
+    { value: 'toys', label: 'Toys' },
+    { value: 'vehicles', label: 'Vehicles' }
+  ];
+
+  const handleCategoryClick = (category) => {
+    if (selectedCategory === category) {
+      // If the same category is clicked again, clear the filter
+      setSelectedCategory('');
+    } else {
+      // Otherwise, set the selected category
+      setSelectedCategory(category);
+    }
+    setShowCategories(false);
+  };
+
+  const handleCategoriesButtonClick = () => {
+    setShowCategories(!showCategories);
     setShowFilters(false);
   };
 
@@ -40,7 +68,15 @@ function App() {
   const fetchListings = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:8000/src/get_all_listings.php?sort=${sortBy}`);
+      let url = `http://localhost:8000/src/get_all_listings.php?sort=${sortBy}`;
+      
+      // Add category filter if one is selected
+      if (selectedCategory) {
+        url += `&category=${selectedCategory}`;
+      }
+      
+      console.log('Fetching listings from:', url);
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error('Failed to fetch listings');
       }
@@ -72,10 +108,10 @@ function App() {
     }
   };
 
-  // Fetch listings when component mounts or sort changes
+  // Fetch listings when component mounts or sort or category changes
   useEffect(() => {
     fetchListings();
-  }, [sortBy]);
+  }, [sortBy, selectedCategory]);
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -313,8 +349,13 @@ function App() {
                    onChange={handleSearch}
                  />
                </div>
-               <button class="filter-button" onClick={handleTechnologyClick}>Technology</button>
-               <button className="filter-button" onClick={handleFilterClick}>Filter</button>
+               <button class={`filter-button small ${selectedCategory ? 'active' : ''}`} onClick={handleCategoriesButtonClick}>
+                 {selectedCategory ? 
+                   `Category: ${categories.find(c => c.value === selectedCategory)?.label || 'All'}` : 
+                   'Categories'
+                 }
+               </button>
+               <button className="filter-button small" onClick={handleFilterClick}>Filter</button>
 
                {showFilters && (
                  <div className="filter-dropdown">
@@ -325,14 +366,25 @@ function App() {
                  </div>
                )}
 
-{showTechnology && (
-  <div className="filter-dropdown">
-    <button onClick={() => handleSortChange('tech_option1')} className="filter-option">Technology</button>
-    <button onClick={() => handleSortChange('tech_option2')} className="filter-option">Hobbies</button>
-    <button onClick={() => handleSortChange('tech_option1')} className="filter-option">Furniture</button>
-    <button onClick={() => handleSortChange('tech_option2')} className="filter-option">Video Games</button>
-  </div>
-)}
+              {showCategories && (
+                <div className="filter-dropdown">
+                  <button 
+                    onClick={() => handleCategoryClick('')} 
+                    className="filter-option"
+                  >
+                    All Categories
+                  </button>
+                  {categories.map(category => (
+                    <button 
+                      key={category.value}
+                      onClick={() => handleCategoryClick(category.value)} 
+                      className={`filter-option ${selectedCategory === category.value ? 'active' : ''}`}
+                    >
+                      {category.label}
+                    </button>
+                  ))}
+                </div>
+              )}
                
          </div>
           </div>
@@ -350,6 +402,7 @@ function App() {
                 <option value="price_low">Price: Low to High</option>
               </select>
             </div>
+            
             <div name="Listings-Grid" id="List-Grid">
               {isLoading ? (
                 <div className="loading">Loading listings...</div>

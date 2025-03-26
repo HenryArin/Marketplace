@@ -39,6 +39,7 @@ try {
     
     // Get sort parameter from query string
     $sort = $_GET['sort'] ?? 'newest';
+    $category = $_GET['category'] ?? '';
     
     // Base SQL query
     $sql = 'SELECT 
@@ -46,13 +47,20 @@ try {
         l.title,
         l.description,
         l.price,
+        l.category,
         l.sold,
         l.created_at,
         GROUP_CONCAT(i.fullpath) as images
     FROM listing l
     LEFT JOIN images i ON l.listingID = i.listingID
-    WHERE l.sold = 0
-    GROUP BY l.listingID';
+    WHERE l.sold = 0';
+    
+    // Add category filter if provided
+    if (!empty($category) && $category !== 'all') {
+        $sql .= ' AND l.category = :category';
+    }
+    
+    $sql .= ' GROUP BY l.listingID';
     
     // Add sorting based on parameter
     switch ($sort) {
@@ -72,7 +80,19 @@ try {
             $sql .= ' ORDER BY l.created_at DESC';
     }
     
-    $result = $db->query($sql);
+    // Log the SQL for debugging
+    error_log("SQL Query: " . $sql);
+    
+    // Prepare and execute the query
+    if (!empty($category) && $category !== 'all') {
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':category', $category, SQLITE3_TEXT);
+        $result = $stmt->execute();
+        error_log("Filtering by category: " . $category);
+    } else {
+        $result = $db->query($sql);
+        error_log("No category filter applied");
+    }
     
     if (!$result) {
         throw new Exception('Failed to fetch listings: ' . $db->lastErrorMsg());

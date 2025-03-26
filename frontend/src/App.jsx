@@ -25,10 +25,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
   const [showTechnology, setShowTechnology] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleTechnologyClick = () => {
     setShowTechnology(!showTechnology);
     setShowFilters(false);
+  };
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
   };
 
   // Function to fetch listings
@@ -300,19 +305,25 @@ function App() {
           <div name="Button-Container" id="Button-Container">
             <div name="Button-Rows" id="Button-Rows">
                <div class="search-container">
-                 <input type="text" class="search-input" placeholder="...Search" />
-        </div>
-        <button class="filter-button" onClick={handleTechnologyClick}>Technology</button>
-        <button className="filter-button" onClick={handleFilterClick}>Filter</button>
+                 <input 
+                   type="text" 
+                   class="search-input" 
+                   placeholder="...Search" 
+                   value={searchQuery}
+                   onChange={handleSearch}
+                 />
+               </div>
+               <button class="filter-button" onClick={handleTechnologyClick}>Technology</button>
+               <button className="filter-button" onClick={handleFilterClick}>Filter</button>
 
-        {showFilters && (
-          <div className="filter-dropdown">
-            <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
-            <button onClick={() => handleSortChange('oldest')} className="filter-option">Oldest First</button>
-            <button onClick={() => handleSortChange('price_high')} className="filter-option">Price: High to Low</button>
-            <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
-          </div>
-        )}
+               {showFilters && (
+                 <div className="filter-dropdown">
+                   <button onClick={() => handleSortChange('newest')} className="filter-option">Newest First</button>
+                   <button onClick={() => handleSortChange('oldest')} className="filter-option">Oldest First</button>
+                   <button onClick={() => handleSortChange('price_high')} className="filter-option">Price: High to Low</button>
+                   <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
+                 </div>
+               )}
 
 {showTechnology && (
   <div className="filter-dropdown">
@@ -345,31 +356,36 @@ function App() {
               ) : listings.length === 0 ? (
                 <div className="no-listings">No listings found</div>
               ) : (
-                listings.map((listing) => (
-                  <div 
-                    key={listing.listingID} 
-                    className="listing-item"
-                    onClick={() => {
-                      console.log('Clicked listing:', listing);
-                      setSelectedListing(listing);
-                    }}
-                  >
-                    <img 
-                      src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
-                      alt={listing.title}
-                      className="List-Image"
-                      width="250"
-                      height="250"
-                      onError={(e) => {
-                        e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                listings
+                  .filter(listing => 
+                    listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    listing.description.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                  .map((listing) => (
+                    <div 
+                      key={listing.listingID} 
+                      className="listing-item"
+                      onClick={() => {
+                        console.log('Clicked listing:', listing);
+                        setSelectedListing(listing);
                       }}
-                    />
-                    <div className="listing-info">
-                      <h3>{listing.title}</h3>
-                      <p className="price">${listing.price}</p>
+                    >
+                      <img 
+                        src={`http://localhost:8000/img/listings/${listing.images[0] || 'default.jpg'}`}
+                        alt={listing.title}
+                        className="List-Image"
+                        width="250"
+                        height="250"
+                        onError={(e) => {
+                          e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOHB4IiBmaWxsPSIjMjEyNTI5Ij5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=';
+                        }}
+                      />
+                      <div className="listing-info">
+                        <h3>{listing.title}</h3>
+                        <p className="price">${listing.price}</p>
+                      </div>
                     </div>
-                  </div>
-                ))
+                  ))
               )}
             </div>
           </div>

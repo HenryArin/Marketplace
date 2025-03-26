@@ -110,10 +110,10 @@
 }
 
 .message-avatar {
-  width: 40px;
+  width: 100px;
   height: 40px;
   border-radius: 50%;
-  background-color: #007bff;
+  background-color: #89ec8d;
   color: white;
   display: flex;
   align-items: center;
@@ -429,6 +429,7 @@
 /* Create Listing Form */
 .create-listing-form {
   max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   padding: 30px;
   max-height: 70vh;
@@ -469,7 +470,7 @@
 
 .form-group label {
   font-size: 1.2rem;
-  color: #2c3e50;
+  color: white;
   margin-bottom: 12px;
   display: block;
   font-weight: 600;
@@ -529,7 +530,7 @@
 .upload-button {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #007bff;
+  background-color: #14213d;
   color: white;
   border-radius: 4px;
   cursor: pointer;
@@ -619,7 +620,7 @@
 .submit-button {
   width: 100%;
   padding: 14px;
-  background-color: #28a745;
+  background-color: #fca311;
   color: white;
   border: none;
   border-radius: 8px;

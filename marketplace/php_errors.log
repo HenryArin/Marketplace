@@ -879,3 +879,247 @@ Stack trace:
     LEFT JOIN images i ON l.listingID = i.listingID
     WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
 [26-Mar-2025 07:21:45 UTC] No category filter applied
+[26-Mar-2025 14:48:32 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 14:48:32 UTC] No category filter applied
+[26-Mar-2025 14:48:32 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 14:48:32 UTC] No category filter applied
+[26-Mar-2025 14:59:52 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 14:59:52 UTC] No category filter applied
+[26-Mar-2025 14:59:52 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 14:59:52 UTC] No category filter applied
+[26-Mar-2025 15:03:42 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:03:42 UTC] No category filter applied
+[26-Mar-2025 15:03:42 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:03:42 UTC] No category filter applied
+[26-Mar-2025 15:14:45 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:14:45 UTC] Found 0 listings for user
+[26-Mar-2025 15:14:45 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:14:45 UTC] Found 0 listings for user
+[26-Mar-2025 15:17:17 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:17:17 UTC] No category filter applied
+[26-Mar-2025 15:17:17 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:17:17 UTC] No category filter applied
+[26-Mar-2025 15:21:15 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:21:15 UTC] Found 0 listings for user
+[26-Mar-2025 15:21:15 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:21:15 UTC] Found 0 listings for user
+[26-Mar-2025 15:21:57 UTC] Received POST request
+[26-Mar-2025 15:21:57 UTC] POST data: Array
+(
+    [title] => Skateboard
+    [price] => 25
+    [description] => Used
+    [category] => other
+    [location] => Cal State Bakersfield University
+)
+
+[26-Mar-2025 15:21:57 UTC] FILES data: Array
+(
+    [images] => Array
+        (
+            [name] => Array
+                (
+                    [0] => Image12.jpg
+                )
+
+            [full_path] => Array
+                (
+                    [0] => Image12.jpg
+                )
+
+            [type] => Array
+                (
+                    [0] => image/jpeg
+                )
+
+            [tmp_name] => Array
+                (
+                    [0] => C:\Users\oscar\AppData\Local\Temp\php2CE7.tmp
+                )
+
+            [error] => Array
+                (
+                    [0] => 0
+                )
+
+            [size] => Array
+                (
+                    [0] => 139289
+                )
+
+        )
+
+)
+
+[26-Mar-2025 15:21:57 UTC] Database file exists at: C:\projects\Project2\Project2\marketplace/sql/marketplace.db
+[26-Mar-2025 15:21:57 UTC] Using listerID: 2
+[26-Mar-2025 15:21:57 UTC] Form data received - Title: Skateboard, Price: 25, Category: other, Location: Cal State Bakersfield University, Description: Used...
+[26-Mar-2025 15:21:57 UTC] Preparing SQL: INSERT INTO listing (listerID, title, description, price, category, location, sold) VALUES (:listerID, :title, :description, :price, :category, :location, 0)
+[26-Mar-2025 15:21:57 UTC] Created listing with ID: 1
+[26-Mar-2025 15:21:57 UTC] Moving uploaded file to: ../img/listings/67e41b95dd91b.jpg
+[26-Mar-2025 15:21:57 UTC] Successfully saved image: 67e41b95dd91b.jpg
+[26-Mar-2025 15:21:57 UTC] Successfully created listing with 1 images
+[26-Mar-2025 15:22:03 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:22:03 UTC] Found 1 listings for user
+[26-Mar-2025 15:22:03 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:22:03 UTC] Found 1 listings for user
+[26-Mar-2025 15:22:44 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:22:44 UTC] Found 1 listings for user
+[26-Mar-2025 15:22:44 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:22:44 UTC] Found 1 listings for user
+[26-Mar-2025 15:30:08 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:30:08 UTC] Found 1 listings for user
+[26-Mar-2025 15:30:08 UTC] Authenticated user ID: 2
+[26-Mar-2025 15:30:08 UTC] Found 1 listings for user
+[26-Mar-2025 15:30:50 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:30:50 UTC] No category filter applied
+[26-Mar-2025 15:30:50 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:30:50 UTC] No category filter applied
+[26-Mar-2025 15:34:54 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:34:54 UTC] No category filter applied
+[26-Mar-2025 15:34:54 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 15:34:54 UTC] No category filter applied

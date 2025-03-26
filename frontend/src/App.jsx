@@ -24,33 +24,12 @@ function App() {
   const [sortBy, setSortBy] = useState('newest');
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-  const [showSouthWest, setShowSouthWest] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
   const [showTechnology, setShowTechnology] = useState(false);
 
-
-  const handleSouthWestClick = () => {
-    setShowSouthWest(!showSouthWest);
-    setShowFavorites(false);
-    setShowTechnology(false);
-    setShowFilters(false);
-  };
-  
-  const handleFavoritesClick = () => {
-    setShowFavorites(!showFavorites);
-    setShowSouthWest(false);
-    setShowTechnology(false);
-    setShowFilters(false);
-  };
-  
   const handleTechnologyClick = () => {
     setShowTechnology(!showTechnology);
-    setShowSouthWest(false);
-    setShowFavorites(false);
     setShowFilters(false);
   };
-
-
 
   // Function to fetch listings
   const fetchListings = async () => {
@@ -323,9 +302,7 @@ function App() {
                <div class="search-container">
                  <input type="text" class="search-input" placeholder="...Search" />
         </div>
-        <button class="filter-button" onClick={handleFilterClick}>SouthWest</button>
-        <button class="filter-button" onClick={handleFavoritesClick}>Favorites</button>
-        <button class="filter-button"  onClick={handleTechnologyClick}>Technology</button>
+        <button class="filter-button" onClick={handleTechnologyClick}>Technology</button>
         <button className="filter-button" onClick={handleFilterClick}>Filter</button>
 
         {showFilters && (
@@ -336,22 +313,6 @@ function App() {
             <button onClick={() => handleSortChange('price_low')} className="filter-option">Price: Low to High</button>
           </div>
         )}
-
-{showSouthWest && (
-  <div className="filter-dropdown">
-    <button onClick={() => handleSortChange('southwest_option1')} className="filter-option">SouthEast</button>
-    <button onClick={() => handleSortChange('southwest_option2')} className="filter-option">SouthWest</button>
-    <button onClick={() => handleSortChange('southwest_option1')} className="filter-option">NorthWest</button>
-    <button onClick={() => handleSortChange('southwest_option2')} className="filter-option">NorthEast</button>
-  </div>
-)}
-
-{showFavorites && (
-  <div className="filter-dropdown">
-    <button onClick={() => handleSortChange('favorites_option1')} className="filter-option"></button>
-    <button onClick={() => handleSortChange('favorites_option2')} className="filter-option"></button>
-  </div>
-)}
 
 {showTechnology && (
   <div className="filter-dropdown">

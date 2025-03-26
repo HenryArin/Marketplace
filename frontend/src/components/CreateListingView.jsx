@@ -7,6 +7,7 @@ const CreateListingView = ({ onClose }) => {
     price: '',
     description: '',
     category: 'other',
+    location: '',
     images: []
   });
   const [previewImages, setPreviewImages] = useState([]);
@@ -56,6 +57,7 @@ const CreateListingView = ({ onClose }) => {
       formDataToSend.append('price', formData.price);
       formDataToSend.append('description', formData.description);
       formDataToSend.append('category', formData.category);
+      formDataToSend.append('location', formData.location);
       
       // Append each image to form data
       formData.images.forEach((image, index) => {
@@ -83,6 +85,7 @@ const CreateListingView = ({ onClose }) => {
         price: '',
         description: '',
         category: 'other',
+        location: '',
         images: []
       });
       setPreviewImages([]);
@@ -146,6 +149,16 @@ const CreateListingView = ({ onClose }) => {
             <option value="toys">Toys</option>
             <option value="vehicles">Vehicles</option>
           </select>
+        </div>
+
+        <div className="form-group">
+          <label>Location</label>
+          <textarea
+            value={formData.location}
+            onChange={(e) => setFormData({...formData, location: e.target.value})}
+            placeholder="Enter location (e.g., McDonald's on Highway 46, Wasco, California)"
+            rows="1"
+          />
         </div>
 
         <div className="form-group">

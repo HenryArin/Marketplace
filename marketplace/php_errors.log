@@ -741,3 +741,141 @@ Stack trace:
 [26-Mar-2025 02:11:37 UTC] Found 1 listings for user
 [26-Mar-2025 02:11:37 UTC] Authenticated user ID: 8
 [26-Mar-2025 02:11:37 UTC] Found 1 listings for user
+[26-Mar-2025 07:16:12 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:16:12 UTC] PHP Warning:  SQLite3::query(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_all_listings.php on line 94
+[26-Mar-2025 07:16:12 UTC] No category filter applied
+[26-Mar-2025 07:16:12 UTC] Get all listings error: Failed to fetch listings: no such column: l.category
+[26-Mar-2025 07:16:12 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:16:12 UTC] PHP Warning:  SQLite3::query(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_all_listings.php on line 94
+[26-Mar-2025 07:16:12 UTC] No category filter applied
+[26-Mar-2025 07:16:12 UTC] Get all listings error: Failed to fetch listings: no such column: l.category
+[26-Mar-2025 07:16:50 UTC] Invalid token
+[26-Mar-2025 07:16:50 UTC] Invalid token
+[26-Mar-2025 07:16:58 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:16:58 UTC] Found 2 listings for user
+[26-Mar-2025 07:16:58 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:16:58 UTC] Found 2 listings for user
+[26-Mar-2025 07:17:00 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:17:00 UTC] Found 2 listings for user
+[26-Mar-2025 07:17:00 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:17:00 UTC] Found 2 listings for user
+[26-Mar-2025 07:19:34 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:19:34 UTC] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_user_listings.php on line 114
+[26-Mar-2025 07:19:34 UTC] Get user listings error: Failed to prepare statement: no such column: l.category
+[26-Mar-2025 07:19:34 UTC] Stack trace: #0 {main}
+[26-Mar-2025 07:19:34 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:19:34 UTC] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_user_listings.php on line 114
+[26-Mar-2025 07:19:34 UTC] Get user listings error: Failed to prepare statement: no such column: l.category
+[26-Mar-2025 07:19:34 UTC] Stack trace: #0 {main}
+[26-Mar-2025 07:19:38 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:19:38 UTC] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_user_listings.php on line 114
+[26-Mar-2025 07:19:38 UTC] Get user listings error: Failed to prepare statement: no such column: l.category
+[26-Mar-2025 07:19:38 UTC] Stack trace: #0 {main}
+[26-Mar-2025 07:19:38 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:19:38 UTC] PHP Warning:  SQLite3::prepare(): Unable to prepare statement: no such column: l.category in /Users/henryarinaga/project2/marketplace/src/get_user_listings.php on line 114
+[26-Mar-2025 07:19:38 UTC] Get user listings error: Failed to prepare statement: no such column: l.category
+[26-Mar-2025 07:19:38 UTC] Stack trace: #0 {main}
+[26-Mar-2025 07:20:57 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:20:57 UTC] No category filter applied
+[26-Mar-2025 07:20:57 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:20:57 UTC] No category filter applied
+[26-Mar-2025 07:21:07 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:21:07 UTC] Found 2 listings for user
+[26-Mar-2025 07:21:07 UTC] Authenticated user ID: 5
+[26-Mar-2025 07:21:07 UTC] Found 2 listings for user
+[26-Mar-2025 07:21:38 UTC] Received POST request
+[26-Mar-2025 07:21:38 UTC] POST data: Array
+(
+    [title] => test
+    [price] => 100
+    [description] => test
+    [category] => technology
+    [location] => CSUB bakersfield
+)
+
+[26-Mar-2025 07:21:38 UTC] FILES data: Array
+(
+)
+
+[26-Mar-2025 07:21:38 UTC] Database file exists at: /Users/henryarinaga/project2/marketplace/sql/marketplace.db
+[26-Mar-2025 07:21:38 UTC] Using listerID: 5
+[26-Mar-2025 07:21:38 UTC] Form data received - Title: test, Price: 100, Category: technology, Location: CSUB bakersfield, Description: test...
+[26-Mar-2025 07:21:38 UTC] Preparing SQL: INSERT INTO listing (listerID, title, description, price, category, location, sold) VALUES (:listerID, :title, :description, :price, :category, :location, 0)
+[26-Mar-2025 07:21:38 UTC] Created listing with ID: 9
+[26-Mar-2025 07:21:38 UTC] Successfully created listing with 0 images
+[26-Mar-2025 07:21:45 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:21:45 UTC] No category filter applied
+[26-Mar-2025 07:21:45 UTC] SQL Query: SELECT 
+        l.listingID,
+        l.title,
+        l.description,
+        l.price,
+        l.category,
+        l.location,
+        l.sold,
+        l.created_at,
+        GROUP_CONCAT(i.fullpath) as images
+    FROM listing l
+    LEFT JOIN images i ON l.listingID = i.listingID
+    WHERE l.sold = 0 GROUP BY l.listingID ORDER BY l.created_at DESC
+[26-Mar-2025 07:21:45 UTC] No category filter applied

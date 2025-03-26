@@ -9,7 +9,9 @@ const UserListingsView = ({ onClose }) => {
   const [editFormData, setEditFormData] = useState({
     title: '',
     price: '',
-    description: ''
+    description: '',
+    category: 'other',
+    location: ''
   });
 
   // Function to fetch user listings
@@ -106,7 +108,9 @@ const UserListingsView = ({ onClose }) => {
     setEditFormData({
       title: listing.title,
       price: listing.price,
-      description: listing.description
+      description: listing.description,
+      category: listing.category || 'other',
+      location: listing.location || ''
     });
   };
 
@@ -138,7 +142,14 @@ const UserListingsView = ({ onClose }) => {
       // Update the listing in the state
       setListings(listings.map(listing => 
         listing.listingID === editingListing.listingID 
-          ? { ...listing, ...editFormData }
+          ? { 
+              ...listing, 
+              title: editFormData.title,
+              price: editFormData.price,
+              description: editFormData.description,
+              category: editFormData.category,
+              location: editFormData.location
+            }
           : listing
       ));
 
@@ -147,7 +158,9 @@ const UserListingsView = ({ onClose }) => {
       setEditFormData({
         title: '',
         price: '',
-        description: ''
+        description: '',
+        category: 'other',
+        location: ''
       });
     } catch (err) {
       console.error('Error editing listing:', err);
@@ -163,7 +176,9 @@ const UserListingsView = ({ onClose }) => {
     setEditFormData({
       title: '',
       price: '',
-      description: ''
+      description: '',
+      category: 'other',
+      location: ''
     });
   };
 
@@ -199,6 +214,37 @@ const UserListingsView = ({ onClose }) => {
               placeholder="Enter price"
               rows="1"
               required
+            />
+          </div>
+          <div className="form-group">
+            <label>Category</label>
+            <select 
+              value={editFormData.category}
+              onChange={(e) => setEditFormData({...editFormData, category: e.target.value})}
+              className="category-select"
+              required
+            >
+              <option value="books">Books</option>
+              <option value="clothing">Clothing</option>
+              <option value="collectibles">Collectibles</option>
+              <option value="electronics">Electronics</option>
+              <option value="furniture">Furniture</option>
+              <option value="gaming">Gaming</option>
+              <option value="home">Home & Garden</option>
+              <option value="other">Other</option>
+              <option value="sports">Sports</option>
+              <option value="technology">Technology</option>
+              <option value="toys">Toys</option>
+              <option value="vehicles">Vehicles</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Location</label>
+            <textarea
+              value={editFormData.location}
+              onChange={(e) => setEditFormData({...editFormData, location: e.target.value})}
+              placeholder="Enter location (e.g., McDonald's on Highway 46, Wasco, California)"
+              rows="1"
             />
           </div>
           <div className="form-group">
@@ -249,6 +295,14 @@ const UserListingsView = ({ onClose }) => {
               <div className="listing-details">
                 <h3>{listing.title}</h3>
                 <p className="price">${listing.price}</p>
+                {listing.category && (
+                  <p className="category">
+                    Category: {listing.category.charAt(0).toUpperCase() + listing.category.slice(1)}
+                  </p>
+                )}
+                {listing.location && (
+                  <p className="location">Location: {listing.location}</p>
+                )}
                 <p className="description">{listing.description}</p>
                 <p className={`status ${listing.sold ? 'sold' : ''}`}>
                   Status: {listing.sold ? 'Sold' : 'Available'}

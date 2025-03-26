@@ -125,8 +125,9 @@ try {
     $price = $_POST['price'] ?? '';
     $description = $_POST['description'] ?? '';
     $category = $_POST['category'] ?? 'other';
+    $location = $_POST['location'] ?? '';
     
-    error_log("Form data received - Title: $title, Price: $price, Category: $category, Description: " . substr($description, 0, 50) . "...");
+    error_log("Form data received - Title: $title, Price: $price, Category: $category, Location: $location, Description: " . substr($description, 0, 50) . "...");
     
     // Validate required fields
     if (empty($title) || empty($price) || empty($description)) {
@@ -139,12 +140,16 @@ try {
     $columns = $db->query('PRAGMA table_info(listing)');
     $hasSoldColumn = false;
     $hasCategoryColumn = false;
+    $hasLocationColumn = false;
     while ($column = $columns->fetchArray()) {
         if ($column['name'] === 'sold') {
             $hasSoldColumn = true;
         }
         if ($column['name'] === 'category') {
             $hasCategoryColumn = true;
+        }
+        if ($column['name'] === 'location') {
+            $hasLocationColumn = true;
         }
     }
     if (!$hasSoldColumn) {
@@ -154,6 +159,10 @@ try {
     if (!$hasCategoryColumn) {
         error_log("Adding category column to listing table");
         $db->exec('ALTER TABLE listing ADD COLUMN category TEXT DEFAULT "other"');
+    }
+    if (!$hasLocationColumn) {
+        error_log("Adding location column to listing table");
+        $db->exec('ALTER TABLE listing ADD COLUMN location TEXT');
     }
     
     // Check if created_at column exists, add if not
@@ -171,7 +180,7 @@ try {
     }
     
     // Insert the listing
-    $sql = 'INSERT INTO listing (listerID, title, description, price, category, sold) VALUES (:listerID, :title, :description, :price, :category, 0)';
+    $sql = 'INSERT INTO listing (listerID, title, description, price, category, location, sold) VALUES (:listerID, :title, :description, :price, :category, :location, 0)';
     error_log("Preparing SQL: " . $sql);
     
     $stmt = $db->prepare($sql);
@@ -185,6 +194,7 @@ try {
     $stmt->bindValue(':description', $description, SQLITE3_TEXT);
     $stmt->bindValue(':price', $price, SQLITE3_TEXT);
     $stmt->bindValue(':category', $category, SQLITE3_TEXT);
+    $stmt->bindValue(':location', $location, SQLITE3_TEXT);
     
     $result = $stmt->execute();
     if (!$result) {

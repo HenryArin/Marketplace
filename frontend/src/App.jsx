@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import ListingDetailView from './components/ListingDetailView';
+import MapComponent from './components/MapComponent';
 import './App.css';
 
 function App() {
@@ -445,7 +446,12 @@ function App() {
            
           <div name="Bottom-Line" id="Bottom-Line"></div>
           <div className="modal-body">
-            <div className="map-container">Map</div>
+            <div className="map-container">
+              <MapComponent 
+                listings={listings} 
+                onSelectListing={(listing) => setSelectedListing(listing)}
+              />
+            </div>
           </div>
         </div>
       </Modal>

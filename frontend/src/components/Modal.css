@@ -1235,3 +1235,19 @@
   align-self: center;
 }
 
+.user-listings .category,
+.user-listings .location {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.user-listings .category {
+  display: inline-block;
+  background-color: #f0f0f0;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-right: 5px;
+}
+

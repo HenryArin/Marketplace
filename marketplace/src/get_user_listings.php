@@ -100,6 +100,8 @@ try {
         l.title,
         l.description,
         l.price,
+        l.category,
+        l.location,
         l.sold,
         l.created_at,
         GROUP_CONCAT(i.fullpath) as images

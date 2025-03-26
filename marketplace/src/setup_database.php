@@ -29,6 +29,7 @@ try {
             price TEXT NOT NULL,
             description TEXT NOT NULL,
             category TEXT DEFAULT "other",
+            location TEXT,
             FOREIGN KEY (listerID) REFERENCES users(userID)
         )
     ');

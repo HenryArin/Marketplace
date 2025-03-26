@@ -91,6 +91,8 @@ try {
     $title = $data['title'] ?? '';
     $price = $data['price'] ?? '';
     $description = $data['description'] ?? '';
+    $category = $data['category'] ?? 'other';
+    $location = $data['location'] ?? '';
     
     // Validate required fields
     if (empty($title) || empty($price) || empty($description)) {
@@ -121,7 +123,7 @@ try {
     }
     
     // Update the listing
-    $updateSql = 'UPDATE listing SET title = :title, description = :description, price = :price WHERE listingID = :listingID';
+    $updateSql = 'UPDATE listing SET title = :title, description = :description, price = :price, category = :category, location = :location WHERE listingID = :listingID';
     $updateStmt = $db->prepare($updateSql);
     if (!$updateStmt) {
         throw new Exception('Failed to prepare update statement: ' . $db->lastErrorMsg());
@@ -130,6 +132,8 @@ try {
     $updateStmt->bindValue(':title', $title, SQLITE3_TEXT);
     $updateStmt->bindValue(':description', $description, SQLITE3_TEXT);
     $updateStmt->bindValue(':price', $price, SQLITE3_TEXT);
+    $updateStmt->bindValue(':category', $category, SQLITE3_TEXT);
+    $updateStmt->bindValue(':location', $location, SQLITE3_TEXT);
     $updateStmt->bindValue(':listingID', $listingID, SQLITE3_INTEGER);
     
     if (!$updateStmt->execute()) {

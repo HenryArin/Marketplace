@@ -182,6 +182,49 @@ const UserListingsView = ({ onClose }) => {
     });
   };
 
+  // Add a function to toggle the sold status
+  const handleToggleSoldStatus = async (listingID, currentSoldStatus) => {
+    setIsLoading(true);
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError('You must be logged in to update a listing');
+        setIsLoading(false);
+        return;
+      }
+
+      const response = await fetch('http://localhost:8000/src/toggle_listing_sold.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ listingID })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update listing status');
+      }
+
+      const data = await response.json();
+      
+      // Update the listing in the state
+      setListings(listings.map(listing => 
+        listing.listingID === listingID 
+          ? { ...listing, sold: data.soldStatus } 
+          : listing
+      ));
+
+      console.log(`Listing ${listingID} ${data.soldStatus ? 'marked as sold' : 'marked as available'}`);
+    } catch (err) {
+      console.error('Error updating listing status:', err);
+      setError(err.message || 'Failed to update listing status');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="modal-body">
@@ -324,6 +367,12 @@ const UserListingsView = ({ onClose }) => {
                   className="delete-button"
                 >
                   Delete
+                </button>
+                <button
+                  onClick={() => handleToggleSoldStatus(listing.listingID, listing.sold)}
+                  className={`toggle-sold-button ${listing.sold ? 'mark-available' : 'mark-sold'}`}
+                >
+                  {listing.sold ? 'Mark as Available' : 'Mark as Sold'}
                 </button>
               </div>
             </div>

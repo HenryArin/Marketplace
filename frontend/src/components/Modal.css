@@ -938,128 +938,117 @@
 /* User Listings Styles */
 .user-listings {
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  height: calc(100% - 40px);
-  display: flex;
-  flex-direction: column;
-}
-
-.user-listings h2 {
   color: white;
-  margin-bottom: 20px;
-  font-size: 24px;
 }
 
-.user-listings .listings-grid {
+.listings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  padding: 10px;
-  padding-bottom: 100px; /* Extra padding at bottom to ensure visibility */
-  overflow-y: auto;
-  max-height: calc(100% - 60px); /* Subtract header height */
+  margin-top: 20px;
 }
 
-.user-listings .listing-card {
-  background: white;
+.listing-card {
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s;
-  height: auto;
-  min-height: 350px;
   display: flex;
   flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.user-listings .listing-card:hover {
+.listing-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.user-listings .listing-image {
-  width: 100%;
-  height: 180px;
+.listing-image {
+  height: 200px;
   overflow: hidden;
 }
 
-.user-listings .listing-image img {
+.listing-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.user-listings .listing-details {
+.listing-details {
   padding: 15px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  flex: 1;
 }
 
-.user-listings .listing-details h3 {
+.listing-details h3 {
   margin: 0 0 10px 0;
-  color: #333;
-  font-size: 1.2em;
+  font-size: 18px;
+  color: white;
 }
 
-.user-listings .price {
-  font-size: 1.3em;
-  color: #2c5282;
+.listing-details .price {
+  font-size: 20px;
   font-weight: bold;
-  margin: 5px 0;
+  color: #4caf50;
+  margin: 0 0 10px 0;
 }
 
-.user-listings .description {
-  color: #666;
+.listing-details .description {
   margin: 10px 0;
-  font-size: 0.9em;
-  line-height: 1.4;
-  max-height: 60px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  max-height: 80px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
-.user-listings .status {
-  color: #666;
-  font-size: 0.9em;
-  margin: 5px 0;
+.listing-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.user-listings .delete-button {
-  width: 100%;
-  padding: 8px 16px;
-  background-color: #e53e3e;
-  color: white;
-  border: none;
+.edit-button,
+.delete-button {
+  padding: 8px 12px;
   border-radius: 4px;
+  font-size: 14px;
   cursor: pointer;
-  font-size: 0.9em;
-  margin-top: auto;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
-.user-listings .delete-button:hover {
-  background-color: #c53030;
+.edit-button {
+  background-color: #2196f3;
+  color: white;
+  border: 1px solid #1e88e5;
 }
 
-.loading {
-  text-align: center;
-  padding: 20px;
-  color: #666;
+.edit-button:hover {
+  background-color: #1976d2;
 }
 
-.error {
-  color: #e53e3e;
-  text-align: center;
-  padding: 20px;
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #e53935;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
 }
 
 .no-listings {
   text-align: center;
-  padding: 20px;
-  color: #666;
-  font-style: italic;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  margin-top: 20px;
 }
 
 /* Edit Listing Form */
@@ -1249,5 +1238,40 @@
   border-radius: 12px;
   font-size: 12px;
   margin-right: 5px;
+}
+
+.toggle-sold-button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-sold-button.mark-sold {
+  background-color: #4caf50; /* Green */
+  color: white;
+  border: 1px solid #43a047;
+}
+
+.toggle-sold-button.mark-sold:hover {
+  background-color: #388e3c;
+}
+
+.toggle-sold-button.mark-available {
+  background-color: #2196f3; /* Blue */
+  color: white;
+  border: 1px solid #1e88e5;
+}
+
+.toggle-sold-button.mark-available:hover {
+  background-color: #1976d2;
+}
+
+.status.sold {
+  color: #d32f2f;
+  font-weight: bold;
 }
 
